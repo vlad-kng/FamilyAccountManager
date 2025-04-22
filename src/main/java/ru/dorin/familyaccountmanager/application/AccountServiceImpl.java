@@ -2,16 +2,15 @@ package ru.dorin.familyaccountmanager.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.dorin.familyaccountmanager.application.port.AccountService;
 import ru.dorin.familyaccountmanager.application.port.EventStore;
 import ru.dorin.familyaccountmanager.application.utils.MessageResolver;
-import ru.dorin.familyaccountmanager.domain.DomainId;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.account.AccountName;
 import ru.dorin.familyaccountmanager.domain.account.AccountType;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.account.TransactionDTO;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.AccountCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.AccountEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.InitialBalanceEvent;
@@ -22,7 +21,6 @@ import ru.dorin.familyaccountmanager.domain.event.account.TransferMoneyEvent;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

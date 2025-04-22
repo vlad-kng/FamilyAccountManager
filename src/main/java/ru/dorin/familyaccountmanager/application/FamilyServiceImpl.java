@@ -3,6 +3,7 @@ package ru.dorin.familyaccountmanager.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.application.port.EventStore;
+import ru.dorin.familyaccountmanager.application.port.FamilyService;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.event.family.AccountLinkedEvent;
 import ru.dorin.familyaccountmanager.domain.event.family.FamilyCreatedEvent;

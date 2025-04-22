@@ -6,6 +6,9 @@ import graphql.schema.DataFetchingEnvironment;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.stereotype.Component;
 
+/**
+ * GraphQL exception resolver to resolve application exception to GQL format
+ */
 @Component
 public class GlobalGraphQLExceptionResolver extends DataFetcherExceptionResolverAdapter {
 
