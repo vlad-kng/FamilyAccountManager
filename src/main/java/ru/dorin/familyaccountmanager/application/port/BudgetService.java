@@ -1,5 +1,6 @@
 package ru.dorin.familyaccountmanager.application.port;
 
+import ru.dorin.familyaccountmanager.domain.budget.Budget;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetLimits;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.YearMonth;
 
 public interface BudgetService {
+    Budget getBudget(BudgetId budgetId);
     BudgetId createBudget(FamilyId familyId, YearMonth period, BudgetLimits limits);
     boolean spend(BudgetId budgetId, BudgetCategory budgetCategory, BigDecimal amount);
 }

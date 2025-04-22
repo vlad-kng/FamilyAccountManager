@@ -3,6 +3,7 @@ package ru.dorin.familyaccountmanager.application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.application.port.AccountService;
+import ru.dorin.familyaccountmanager.application.port.BudgetService;
 import ru.dorin.familyaccountmanager.application.port.EventStore;
 import ru.dorin.familyaccountmanager.application.utils.MessageResolver;
 import ru.dorin.familyaccountmanager.domain.account.Account;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final EventStore<Account, AccountEvent> eventStore;
+    private final BudgetService budgetService;
     private final MessageResolver messageResolver;
 
     @Override
@@ -53,6 +55,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean withdrawBalance(AccountId accountId, BigDecimal amount) {
+        //TODO add BudgetCategory parameter and budget spent usage
         var event = new MoneyWithdrawalEvent(accountId, Instant.now(), new Money(amount));
         eventStore.append(accountId, event);
         return true;

@@ -9,6 +9,7 @@ public class OverBudgetLimitException extends LocalizedException {
     public OverBudgetLimitException() {
         super(MESSAGE);
     }
+
     public OverBudgetLimitException(BudgetId budgetId, BudgetCategory category) {
         super(MESSAGE, budgetId, category);
     }

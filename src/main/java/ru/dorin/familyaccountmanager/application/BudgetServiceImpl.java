@@ -37,12 +37,16 @@ public class BudgetServiceImpl implements BudgetService {
         var event = new BudgetSpentEvent(budgetId, budgetCategory, money, Instant.now());
         eventStore.append(budgetId, event);
 
-        Budget budget = new Budget(budgetId);
-        budget.recreateFrom(eventStore.load(budgetId));
+        Budget budget = getBudget(budgetId);
         if (budget.isOverLimit(budgetCategory)) {
             //TODO send notification, not throw exception
             throw new OverBudgetLimitException(budgetId, budgetCategory);
         }
         return true;
+    }
+
+    public Budget getBudget(BudgetId budgetId) {
+        Budget budget = new Budget(budgetId);
+        return budget.recreateFrom(eventStore.load(budgetId));
     }
 }
