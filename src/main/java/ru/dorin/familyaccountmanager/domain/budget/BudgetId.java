@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.domain.family;
+package ru.dorin.familyaccountmanager.domain.budget;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,13 +10,13 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-public class FamilyId extends DomainId<Family> {
+public class BudgetId extends DomainId<Budget> {
     private UUID id;
 
-    public FamilyId() {
+    public BudgetId() {
         this.id = UUID.randomUUID();
     }
-    public FamilyId(String id) {
+    public BudgetId(String id) {
         this.id = UUID.fromString(id);
     }
 }

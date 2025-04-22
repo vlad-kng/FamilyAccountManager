@@ -10,4 +10,7 @@ public interface DomainEvent<Entity extends AbstractDomainAggregate<Entity>> {
     Instant occurredAt();
     void applyTo(Entity entity);
     String getDescription();
+    default Object[] getDescriptionArgs() {
+        return new Object[]{getAggregateId()};
+    }
 }
