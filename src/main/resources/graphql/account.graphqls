@@ -1,0 +1,41 @@
+type Query {
+    getAccount(id: ID!): Account
+    getTransactions(accountId: ID!): [Transaction]
+}
+
+type Mutation {
+    createAccount(accountName: String!, accountType: AccountType!, balance: String!): AccountId!
+    increaseBalance(id: ID!, amount: String): Boolean
+    withdrawBalance(id: ID!, amount: String): Boolean
+    transferMoney(from: ID!, to: ID!, amount: String): Boolean
+
+}
+
+type Account {
+    id: AccountId
+    name: AccountName
+    accountType: AccountType
+    balance: String
+    transactions: [Transaction]
+}
+
+type AccountId {
+    id: ID
+}
+
+type AccountName {
+    name: String
+}
+
+enum AccountType {
+    DEBIT,
+    SAVING,
+    CREDIT
+}
+
+type Transaction {
+    type: String
+    amount: Float
+    occurredAt: String
+    description: String
+}

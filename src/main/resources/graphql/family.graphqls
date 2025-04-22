@@ -1,0 +1,47 @@
+
+extend type Query {
+    getFamily(id: ID!): Family
+}
+
+extend type Mutation {
+    createFamily(surname: String!): FamilyId!
+    linkAccount(familyId: ID!, accountId: ID!): Boolean
+    addMember(familyId: ID!, memberName: String!, role: Role!): Boolean
+}
+
+type Family {
+    id: FamilyId
+    surname: Surname
+    members: [Member]
+    accountIds: [AccountId]
+    accounts: [Account]
+}
+
+type FamilyId {
+    id: ID
+}
+
+type Surname {
+    surname: String
+}
+
+type Member {
+    id: MemberId
+    name: MemberName
+    role: Role
+}
+
+type MemberId {
+    id: ID
+}
+
+type MemberName {
+    name: String
+}
+
+enum Role {
+    PARENT,
+    CHILD,
+    OTHER
+}
+
