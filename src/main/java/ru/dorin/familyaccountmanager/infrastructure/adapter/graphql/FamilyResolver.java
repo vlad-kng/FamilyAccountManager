@@ -34,12 +34,6 @@ public class FamilyResolver {
     }
 
     @MutationMapping
-    public boolean linkAccount(@Argument UUID familyId, @Argument UUID accountId) {
-        familyService.linkAccountToFamily(new FamilyId(familyId), new AccountId(accountId));
-        return true;
-    }
-
-    @MutationMapping
     public boolean addMember(@Argument UUID familyId, @Argument String memberName, @Argument Role role) {
         familyService.addMember(new FamilyId(familyId), memberName, role);
         return true;

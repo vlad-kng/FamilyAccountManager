@@ -1,0 +1,26 @@
+extend type Mutation {
+    createBudget(familyId: ID!, category: BudgetCategory, period: YearMonthScalar, limits: Float): BudgetId!
+}
+
+type Budget {
+    id: BudgetId
+    familyId: FamilyId
+    category: BudgetCategory
+    period: YearMonthScalar
+    limits: Float
+    spent: Float
+}
+
+type BudgetId {
+    id: ID
+}
+
+enum BudgetCategory {
+    GROCERY,
+    TRANSPORT,
+    ENTERTAINMENT,
+    UTILITIES,
+    OTHER
+}
+
+scalar YearMonthScalar

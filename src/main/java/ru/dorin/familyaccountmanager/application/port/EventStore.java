@@ -17,4 +17,6 @@ public interface EventStore<
     List<Event> load(DomainId<Aggregate> aggregateId);
 
     List<Aggregate> loadAggregates(Collection<? extends DomainId<Aggregate>> ids, Function<DomainId<Aggregate>, Aggregate> constructor);
+
+    boolean contains(DomainId<Aggregate> aggregateId);
 }

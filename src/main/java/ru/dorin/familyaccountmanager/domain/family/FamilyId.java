@@ -7,7 +7,7 @@ import ru.dorin.familyaccountmanager.domain.DomainId;
 
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
 @AllArgsConstructor
 public class FamilyId extends DomainId<Family> {

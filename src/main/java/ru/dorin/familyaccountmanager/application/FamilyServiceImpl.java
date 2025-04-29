@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.application.port.EventStore;
 import ru.dorin.familyaccountmanager.application.port.FamilyService;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.event.family.AccountLinkedEvent;
+import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
+import ru.dorin.familyaccountmanager.domain.event.family.FamilyAccountLinkedEvent;
+import ru.dorin.familyaccountmanager.domain.event.family.FamilyBudgetLinkedEvent;
 import ru.dorin.familyaccountmanager.domain.event.family.FamilyCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.event.family.FamilyEvent;
 import ru.dorin.familyaccountmanager.domain.event.family.MemberAddedEvent;
@@ -40,13 +42,20 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Override
     public void linkAccountToFamily(FamilyId familyId, AccountId accountId) {
-        var event = new AccountLinkedEvent(familyId, accountId, Instant.now());
+        var event = new FamilyAccountLinkedEvent(familyId, accountId, Instant.now());
         eventStore.append(familyId, event);
     }
 
     public Family getFamily(FamilyId familyId) {
         var events = eventStore.load(familyId);
         Family family = new Family(familyId);
-        return family.recreateFrom(events);
+        family.recreateFrom(events);
+        return family;
+    }
+
+    @Override
+    public void addBudget(FamilyId familyId, BudgetId budgetId) {
+        var event = new FamilyBudgetLinkedEvent(familyId, budgetId, Instant.now());
+        eventStore.append(familyId, event);
     }
 }

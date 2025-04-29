@@ -1,19 +1,19 @@
-package ru.dorin.familyaccountmanager.domain.event.family;
+package ru.dorin.familyaccountmanager.domain.event.account;
 
+import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.family.Family;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;
 
 import java.time.Instant;
 
 public record AccountLinkedEvent(
-        FamilyId familyId,
         AccountId accountId,
+        FamilyId familyId,
         Instant occurredAt
-) implements FamilyEvent {
+) implements AccountEvent {
     @Override
-    public FamilyId getAggregateId() {
-        return familyId;
+    public AccountId getAggregateId() {
+        return accountId;
     }
 
     @Override
@@ -22,12 +22,12 @@ public record AccountLinkedEvent(
     }
 
     @Override
-    public void applyTo(Family family) {
-        family.linkAccount(accountId);
+    public void applyTo(Account account) {
+        account.linkToFamily(familyId);
     }
 
     @Override
     public String getDescription() {
-        return "family.link.account";
+        return "account.link.family";
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
+import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,7 @@ public class Family extends AbstractDomainAggregate<Family> {
     private Surname surname;
     private final List<Member> members = new ArrayList<>();
     private final List<AccountId> accountIds = new ArrayList<>();
+    private final List<BudgetId> budgetIds = new ArrayList<>();
 
     public Family(FamilyId id) {
         this.id = id;
@@ -29,11 +31,18 @@ public class Family extends AbstractDomainAggregate<Family> {
         accountIds.add(accountId);
     }
 
+    public void linkBudget(BudgetId budgetId) {
+        budgetIds.add(budgetId);
+    }
+
     public List<Member> getMembers() {
         return Collections.unmodifiableList(members);
     }
 
     public List<AccountId> getAccountIds() {
         return Collections.unmodifiableList(accountIds);
+    }
+    public List<BudgetId> getBudgetIds() {
+        return Collections.unmodifiableList(budgetIds);
     }
 }

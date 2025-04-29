@@ -12,7 +12,7 @@ public record InitialBalanceEvent(
         AccountId accountId,
         Money money,
         Instant occurredAt
-) implements AccountEvent {
+) implements AccountTransactionEvent {
 
 
     @Override

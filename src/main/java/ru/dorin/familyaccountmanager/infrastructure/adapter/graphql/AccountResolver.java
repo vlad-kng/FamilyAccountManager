@@ -12,6 +12,8 @@ import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.account.AccountType;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.account.TransactionDTO;
+import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
+import ru.dorin.familyaccountmanager.domain.family.FamilyId;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -52,8 +54,15 @@ public class AccountResolver {
 
     @MutationMapping
     public boolean withdrawBalance(@Argument UUID id,
-                                   @Argument String amount) {
-        return accountService.withdrawBalance(new AccountId(id), new BigDecimal(amount));
+                                   @Argument String amount,
+                                   @Argument BudgetCategory category) {
+        return accountService.withdrawBalance(new AccountId(id), new BigDecimal(amount), category);
+    }
+
+    @MutationMapping
+    public boolean linkAccount(@Argument UUID familyId, @Argument UUID accountId) {
+        accountService.linkAccountToFamily(new AccountId(accountId), new FamilyId(familyId));
+        return true;
     }
 
     @MutationMapping

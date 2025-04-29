@@ -15,11 +15,10 @@ public abstract class AbstractDomainAggregate<T extends AbstractDomainAggregate<
 
     public abstract DomainId<T> getId();
 
-    public T recreateFrom(List<? extends DomainEvent<T>> domainEvents) {
+    public void recreateFrom(List<? extends DomainEvent<T>> domainEvents) {
         if (domainEvents.isEmpty()) {
             throw new EmptyEventsException(getId());
         }
         domainEvents.forEach(this::apply);
-        return (T) this;
     }
 }

@@ -43,8 +43,14 @@ public abstract class AbstractInMemoryEventStore<
         return loadAll(ids).entrySet().stream()
                 .map(entry -> {
                     Aggregate aggregate = constructor.apply(entry.getKey());
-                    return aggregate.recreateFrom(entry.getValue());
+                    aggregate.recreateFrom(entry.getValue());
+                    return aggregate;
                 })
                 .toList();
+    }
+
+    @Override
+    public boolean contains(DomainId<Aggregate> aggregateId) {
+        return store.containsKey(aggregateId);
     }
 }
