@@ -6,7 +6,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
-import ru.dorin.familyaccountmanager.application.port.AccountService;
+import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
 import ru.dorin.familyaccountmanager.application.port.FamilyService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FamilyResolver {
     private final FamilyService familyService;
-    private final AccountService accountService;
+    private final AccountQueryService accountQueryService;
 
     @QueryMapping
     public Family getFamily(@Argument UUID id) {
@@ -42,6 +42,6 @@ public class FamilyResolver {
     @SchemaMapping(typeName = "Family", field = "accounts")
     public List<Account> getAccounts(Family family) {
         List<AccountId> accountIds = family.getAccountIds();
-        return accountService.getAccounts(accountIds);
+        return accountQueryService.getAccounts(accountIds);
     }
 }

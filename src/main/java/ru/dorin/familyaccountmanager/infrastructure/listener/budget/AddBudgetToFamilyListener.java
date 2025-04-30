@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.application.port.FamilyService;
 import ru.dorin.familyaccountmanager.domain.budget.Budget;
 import ru.dorin.familyaccountmanager.domain.event.budget.BudgetCreatedEvent;
-import ru.dorin.familyaccountmanager.domain.event.listener.ProcessingEventListener;
+import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
 
 @Component
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.domain.event.listener;
+package ru.dorin.familyaccountmanager.application.listener;
 
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;

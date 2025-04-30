@@ -13,7 +13,7 @@ public record TransferMoneyEvent(
         AccountId to,
         Instant occurredAt,
         Money money
-) implements AccountTransactionEvent {
+) implements AccountTransactionEvent, AccountEvent {
     @Override
     public AccountId getAggregateId() {
         return from;

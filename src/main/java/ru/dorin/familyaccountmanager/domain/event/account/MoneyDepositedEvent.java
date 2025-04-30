@@ -12,7 +12,7 @@ public record MoneyDepositedEvent(
         AccountId accountId,
         Instant occurredAt,
         Money money
-) implements AccountTransactionEvent {
+) implements AccountTransactionEvent, AccountEvent {
     @Override
     public AccountId getAggregateId() {
         return accountId;

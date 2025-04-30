@@ -1,21 +1,20 @@
 package ru.dorin.familyaccountmanager.infrastructure.listener.budget;
 
 import org.springframework.stereotype.Component;
+import ru.dorin.familyaccountmanager.application.listener.AbstractStoringEventListener;
 import ru.dorin.familyaccountmanager.application.port.EventStore;
 import ru.dorin.familyaccountmanager.domain.budget.Budget;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
-import ru.dorin.familyaccountmanager.domain.event.budget.BudgetCreatedEvent;
-import ru.dorin.familyaccountmanager.domain.event.listener.AbstractStoringEventListener;
+import ru.dorin.familyaccountmanager.domain.event.budget.BudgetEvent;
 
 @Component
-public class BudgetStoringEventListener extends AbstractStoringEventListener<Budget> {
+public class BudgetStoringEventListener extends AbstractStoringEventListener<Budget, BudgetEvent> {
 
-    public BudgetStoringEventListener(EventStore<Budget, DomainEvent<Budget>> eventStore) {
+    public BudgetStoringEventListener(EventStore<Budget, BudgetEvent> eventStore) {
         super(eventStore);
     }
 
     @Override
-    public Class<BudgetCreatedEvent> eventType() {
-        return BudgetCreatedEvent.class;
+    public Class<BudgetEvent> eventType() {
+        return BudgetEvent.class;
     }
 }

@@ -1,6 +1,5 @@
 package ru.dorin.familyaccountmanager.domain.event.family;
 
-import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
 import ru.dorin.familyaccountmanager.domain.family.Family;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;

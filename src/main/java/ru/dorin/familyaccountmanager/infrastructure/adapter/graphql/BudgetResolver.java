@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
-import ru.dorin.familyaccountmanager.application.port.BudgetService;
+import ru.dorin.familyaccountmanager.application.port.BudgetUseCaseService;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 public class BudgetResolver {
-    private final BudgetService budgetService;
+    private final BudgetUseCaseService budgetService;
 
 
     @MutationMapping

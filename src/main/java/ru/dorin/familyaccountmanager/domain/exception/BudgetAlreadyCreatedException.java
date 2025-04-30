@@ -1,7 +1,6 @@
 package ru.dorin.familyaccountmanager.domain.exception;
 
 import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
-import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;
 import ru.dorin.familyaccountmanager.infrastructure.exception.LocalizedException;
 

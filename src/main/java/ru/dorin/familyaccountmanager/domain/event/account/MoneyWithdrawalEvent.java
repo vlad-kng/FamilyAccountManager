@@ -4,15 +4,17 @@ import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.account.TransactionType;
+import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 public record MoneyWithdrawalEvent(
         AccountId accountId,
+        BudgetCategory category,
         Instant occurredAt,
         Money money
-) implements AccountTransactionEvent {
+) implements AccountTransactionEvent, AccountEvent {
     @Override
     public AccountId getAggregateId() {
         return accountId;

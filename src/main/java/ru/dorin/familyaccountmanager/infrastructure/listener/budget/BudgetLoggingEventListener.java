@@ -3,9 +3,8 @@ package ru.dorin.familyaccountmanager.infrastructure.listener.budget;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.domain.budget.Budget;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.domain.event.budget.BudgetEvent;
-import ru.dorin.familyaccountmanager.domain.event.listener.ProcessingEventListener;
+import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
 
 @Component
 @Slf4j
