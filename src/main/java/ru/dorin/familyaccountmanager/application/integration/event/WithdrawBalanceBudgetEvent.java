@@ -12,5 +12,5 @@ public record WithdrawBalanceBudgetEvent (
         BudgetCategory category,
         Money money,
         Instant occurredAt
-) {
+) implements IntegrationEvent {
 }
