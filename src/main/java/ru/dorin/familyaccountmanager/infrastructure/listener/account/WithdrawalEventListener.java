@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.event.account.MoneyWithdrawalEvent;
 import ru.dorin.familyaccountmanager.application.integration.event.WithdrawBalanceBudgetEvent;

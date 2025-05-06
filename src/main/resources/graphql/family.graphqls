@@ -4,39 +4,22 @@ extend type Query {
 }
 
 extend type Mutation {
-    createFamily(surname: String!): FamilyId!
+    createFamily(surname: String!): ID!
     addMember(familyId: ID!, memberName: String!, role: Role!): Boolean
 }
 
 type Family {
-    id: FamilyId
-    surname: Surname
-    members: [Member]
-    accountIds: [AccountId]
-    accounts: [Account]
-    budgetIds: [BudgetId]
-}
-
-type FamilyId {
     id: ID
-}
-
-type Surname {
     surname: String
+    members: [Member]
+    accounts: [Account]
+    budgets: [Budget]
 }
 
 type Member {
-    id: MemberId
-    name: MemberName
-    role: Role
-}
-
-type MemberId {
     id: ID
-}
-
-type MemberName {
     name: String
+    role: Role
 }
 
 enum Role {

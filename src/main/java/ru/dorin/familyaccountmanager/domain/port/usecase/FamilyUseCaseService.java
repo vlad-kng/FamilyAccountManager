@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.application.port;
+package ru.dorin.familyaccountmanager.domain.port.usecase;
 
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetId;

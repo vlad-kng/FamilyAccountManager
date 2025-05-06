@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.application.port;
+package ru.dorin.familyaccountmanager.domain.port;
 
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.DomainId;

@@ -6,14 +6,16 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
-import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
-import ru.dorin.familyaccountmanager.application.port.FamilyQueryService;
-import ru.dorin.familyaccountmanager.application.port.FamilyUseCaseService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
+import ru.dorin.familyaccountmanager.domain.budget.Budget;
 import ru.dorin.familyaccountmanager.domain.family.Family;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;
 import ru.dorin.familyaccountmanager.domain.family.Role;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.BudgetQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.FamilyQueryService;
+import ru.dorin.familyaccountmanager.domain.port.usecase.FamilyUseCaseService;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +26,7 @@ public class FamilyResolver {
     private final FamilyQueryService familyQueryService;
     private final FamilyUseCaseService familyUseCaseService;
     private final AccountQueryService accountQueryService;
+    private final BudgetQueryService budgetQueryService;
 
     @QueryMapping
     public Family getFamily(@Argument UUID id) {
@@ -45,5 +48,10 @@ public class FamilyResolver {
     public List<Account> getAccounts(Family family) {
         List<AccountId> accountIds = family.getAccountIds();
         return accountQueryService.getAccounts(accountIds);
+    }
+
+    @SchemaMapping(typeName = "Family", field = "budgets")
+    public List<Budget> getBudgetsForFamily(Family family) {
+        return budgetQueryService.getBudgets(family.getId());
     }
 }

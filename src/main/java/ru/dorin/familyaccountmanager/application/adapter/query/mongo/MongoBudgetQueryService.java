@@ -1,23 +1,25 @@
-package ru.dorin.familyaccountmanager.application;
+package ru.dorin.familyaccountmanager.application.adapter.query.mongo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import ru.dorin.familyaccountmanager.application.port.BudgetQueryService;
-import ru.dorin.familyaccountmanager.application.port.EventStore;
-import ru.dorin.familyaccountmanager.application.port.FamilyQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.BudgetQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.FamilyQueryService;
 import ru.dorin.familyaccountmanager.domain.budget.Budget;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
 import ru.dorin.familyaccountmanager.domain.event.budget.BudgetEvent;
 import ru.dorin.familyaccountmanager.domain.family.Family;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;
+import ru.dorin.familyaccountmanager.infrastructure.persistence.mongo.MongoEventStore;
 
 import java.util.List;
 
 @Service
+@Primary
 @RequiredArgsConstructor
-public class InMemoryBudgetQueryService implements BudgetQueryService {
+public class MongoBudgetQueryService implements BudgetQueryService {
 
-    private final EventStore<Budget, BudgetEvent> eventStore;
+    private final MongoEventStore<Budget, BudgetEvent> eventStore;
     private final FamilyQueryService familyQueryService;
 
     public Budget getBudget(BudgetId budgetId) {

@@ -1,18 +1,14 @@
 extend type Mutation {
-    createBudget(familyId: ID!, category: BudgetCategory, period: YearMonthScalar, limits: Float): BudgetId!
+    createBudget(familyId: ID!, category: BudgetCategory, period: YearMonthScalar, limits: Float): ID!
 }
 
 type Budget {
-    id: BudgetId
-    familyId: FamilyId
+    id: ID
+    family: Family
     category: BudgetCategory
     period: YearMonthScalar
     limits: Float
     spent: Float
-}
-
-type BudgetId {
-    id: ID
 }
 
 enum BudgetCategory {

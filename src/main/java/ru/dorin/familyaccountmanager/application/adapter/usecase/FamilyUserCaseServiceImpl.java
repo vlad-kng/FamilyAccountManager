@@ -1,11 +1,11 @@
-package ru.dorin.familyaccountmanager.application;
+package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.application.integration.event.AddBudgetIntegrationEvent;
 import ru.dorin.familyaccountmanager.application.integration.event.LinkAccountToFamilyIntegrationEvent;
-import ru.dorin.familyaccountmanager.application.port.FamilyUseCaseService;
+import ru.dorin.familyaccountmanager.domain.port.usecase.FamilyUseCaseService;
 import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetId;

@@ -1,9 +1,9 @@
-package ru.dorin.familyaccountmanager.application;
+package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
-import ru.dorin.familyaccountmanager.application.port.AccountService;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
 import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
@@ -27,7 +27,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AccountServiceImpl implements AccountService {
+public class AccountUseCaseServiceImpl implements AccountUseCaseService {
     private final AccountQueryService accountQueryService;
     private final DomainEventPublisher publisher;
 

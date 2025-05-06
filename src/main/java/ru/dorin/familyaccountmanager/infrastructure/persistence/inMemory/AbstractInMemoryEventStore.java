@@ -1,6 +1,6 @@
 package ru.dorin.familyaccountmanager.infrastructure.persistence.inMemory;
 
-import ru.dorin.familyaccountmanager.application.port.EventStore;
+import ru.dorin.familyaccountmanager.domain.port.EventStore;
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.DomainId;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;

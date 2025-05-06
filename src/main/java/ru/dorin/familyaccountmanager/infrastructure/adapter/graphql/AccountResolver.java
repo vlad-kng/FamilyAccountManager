@@ -6,8 +6,10 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
-import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
-import ru.dorin.familyaccountmanager.application.port.AccountService;
+import ru.dorin.familyaccountmanager.domain.family.Family;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.FamilyQueryService;
+import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.account.AccountType;
@@ -23,8 +25,9 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 public class AccountResolver {
-    private final AccountService accountService;
+    private final AccountUseCaseService accountUseCaseService;
     private final AccountQueryService accountQueryService;
+    private final FamilyQueryService familyQueryService;
 
     @QueryMapping
     public Account getAccount(@Argument UUID id) {
@@ -41,29 +44,34 @@ public class AccountResolver {
         return accountQueryService.getTransactions(account.getId());
     }
 
+    @SchemaMapping(typeName = "Account", field = "family")
+    public Family getFamilyForAccount(Account account) {
+        return familyQueryService.getFamily(account.getFamilyId());
+    }
+
     @MutationMapping
     public AccountId createAccount(@Argument String accountName,
                                    @Argument AccountType accountType,
                                    @Argument String balance) {
-        return accountService.createAccount(accountName, accountType, balance);
+        return accountUseCaseService.createAccount(accountName, accountType, balance);
     }
 
     @MutationMapping
     public boolean increaseBalance(@Argument UUID id,
                                    @Argument String amount) {
-        return accountService.increaseBalance(new AccountId(id), new BigDecimal(amount));
+        return accountUseCaseService.increaseBalance(new AccountId(id), new BigDecimal(amount));
     }
 
     @MutationMapping
     public boolean withdrawBalance(@Argument UUID id,
                                    @Argument String amount,
                                    @Argument BudgetCategory category) {
-        return accountService.withdrawBalance(new AccountId(id), new BigDecimal(amount), category);
+        return accountUseCaseService.withdrawBalance(new AccountId(id), new BigDecimal(amount), category);
     }
 
     @MutationMapping
     public boolean linkAccount(@Argument UUID familyId, @Argument UUID accountId) {
-        accountService.linkAccountToFamily(new AccountId(accountId), new FamilyId(familyId));
+        accountUseCaseService.linkAccountToFamily(new AccountId(accountId), new FamilyId(familyId));
         return true;
     }
 
@@ -72,6 +80,6 @@ public class AccountResolver {
                                  @Argument UUID to,
                                  @Argument String amount) {
         Money money = new Money(new BigDecimal(amount));
-        return accountService.transferMoney(new AccountId(from), new AccountId(to), money);
+        return accountUseCaseService.transferMoney(new AccountId(from), new AccountId(to), money);
     }
 }

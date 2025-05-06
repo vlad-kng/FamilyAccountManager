@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-    createAccount(accountName: String!, accountType: AccountType!, balance: String!): AccountId!
+    createAccount(accountName: String!, accountType: AccountType!, balance: String!): ID!
     increaseBalance(id: ID!, amount: String): Boolean
     withdrawBalance(id: ID!, amount: String, category: BudgetCategory): Boolean
     transferMoney(from: ID!, to: ID!, amount: String): Boolean
@@ -13,19 +13,12 @@ type Mutation {
 }
 
 type Account {
-    id: AccountId
-    name: AccountName
+    id: ID
+    name: String
     accountType: AccountType
     balance: String
+    family: Family
     transactions: [Transaction]
-}
-
-type AccountId {
-    id: ID
-}
-
-type AccountName {
-    name: String
 }
 
 enum AccountType {
