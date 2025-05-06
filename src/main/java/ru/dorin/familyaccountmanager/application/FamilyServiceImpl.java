@@ -29,7 +29,7 @@ public class FamilyServiceImpl implements FamilyService {
         FamilyId id = new FamilyId();
         Surname familySurname = new Surname(surname);
         var event = new FamilyCreatedEvent(id, familySurname, Instant.now());
-        eventStore.append(id, event);
+        eventStore.append(event);
         return id;
     }
 
@@ -37,13 +37,13 @@ public class FamilyServiceImpl implements FamilyService {
     public void addMember(FamilyId familyId, String memberName, Role role) {
         Member member = new Member(memberName, role);
         var event = new MemberAddedEvent(familyId, member, Instant.now());
-        eventStore.append(familyId, event);
+        eventStore.append(event);
     }
 
     @Override
     public void linkAccountToFamily(FamilyId familyId, AccountId accountId) {
         var event = new FamilyAccountLinkedEvent(familyId, accountId, Instant.now());
-        eventStore.append(familyId, event);
+        eventStore.append(event);
     }
 
     public Family getFamily(FamilyId familyId) {
@@ -56,6 +56,6 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public void addBudget(FamilyId familyId, BudgetId budgetId) {
         var event = new FamilyBudgetLinkedEvent(familyId, budgetId, Instant.now());
-        eventStore.append(familyId, event);
+        eventStore.append(event);
     }
 }

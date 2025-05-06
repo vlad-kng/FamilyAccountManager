@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.infrastructure.persistence;
+package ru.dorin.familyaccountmanager.infrastructure.persistence.inMemory;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -37,6 +37,7 @@ public class DomainEventListenerRegistry {
                 .map(listener -> (Listener) listener)
                 .toList();
     }
+
     public <Aggregate extends AbstractDomainAggregate<Aggregate>, Event extends DomainEvent<Aggregate>> DomainEventListener<Aggregate, Event> getStoringListener(Class<Event> eventClass) {
         return  (DomainEventListener<Aggregate, Event>) storingListeners.get(eventClass);
     }

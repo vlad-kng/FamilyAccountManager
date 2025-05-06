@@ -8,6 +8,7 @@ import ru.dorin.familyaccountmanager.application.listener.AbstractStoringEventLi
 import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
 import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.infrastructure.listener.DomainEventListenerRegistry;
+import ru.dorin.familyaccountmanager.infrastructure.listener.mongo.GenericDomainEventMongoListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,11 @@ public class SimpleDomainEventPublisher implements DomainEventPublisher {
                 (AbstractStoringEventListener<Aggregate, Event>) registry.getStoringListener(getEventInterface(eventType));
         if (storingListener != null) {
             storingListener.store(event);
+        }
+
+        GenericDomainEventMongoListener mongoListener = (GenericDomainEventMongoListener) registry.getStoringListener(DomainEvent.class);
+        if (mongoListener != null) {
+            mongoListener.store(event);
         }
 
         for (ProcessingEventListener<Aggregate, Event> listener : listeners) {

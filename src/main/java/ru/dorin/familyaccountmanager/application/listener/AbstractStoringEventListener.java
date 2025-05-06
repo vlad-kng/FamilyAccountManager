@@ -10,6 +10,6 @@ public abstract class AbstractStoringEventListener<Aggregate extends AbstractDom
     private final EventStore<Aggregate, E> eventStore;
 
     public void store(E event) {
-        eventStore.append(event.getAggregateId(), event);
+        eventStore.append(event);
     }
 }

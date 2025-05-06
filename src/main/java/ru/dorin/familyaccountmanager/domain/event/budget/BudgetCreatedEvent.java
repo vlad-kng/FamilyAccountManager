@@ -1,5 +1,6 @@
 package ru.dorin.familyaccountmanager.domain.event.budget;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import ru.dorin.familyaccountmanager.domain.DomainId;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.budget.Budget;
@@ -10,6 +11,7 @@ import ru.dorin.familyaccountmanager.domain.family.FamilyId;
 import java.time.Instant;
 import java.time.YearMonth;
 
+@JsonTypeName("BudgetCreated")
 public record BudgetCreatedEvent(
         BudgetId id,
         FamilyId familyId,

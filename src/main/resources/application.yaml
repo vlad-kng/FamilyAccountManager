@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: FamilyAccountManager
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/event-store
