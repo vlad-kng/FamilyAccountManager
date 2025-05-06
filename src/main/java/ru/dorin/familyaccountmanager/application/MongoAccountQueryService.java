@@ -1,24 +1,26 @@
 package ru.dorin.familyaccountmanager.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
-import ru.dorin.familyaccountmanager.application.port.EventStore;
 import ru.dorin.familyaccountmanager.application.utils.MessageResolver;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.account.TransactionDTO;
 import ru.dorin.familyaccountmanager.domain.event.account.AccountEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.AccountTransactionEvent;
+import ru.dorin.familyaccountmanager.infrastructure.persistence.mongo.MongoEventStore;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Primary
 @RequiredArgsConstructor
-public class InMemoryAccountQueryService implements AccountQueryService {
+public class MongoAccountQueryService implements AccountQueryService {
 
-    private final EventStore<Account, AccountEvent> eventStore;
+    private final MongoEventStore<Account, AccountEvent> eventStore;
     private final MessageResolver messageResolver;
 
     @Override

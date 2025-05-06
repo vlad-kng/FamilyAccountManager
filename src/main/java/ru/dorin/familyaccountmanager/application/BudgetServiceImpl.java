@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import ru.dorin.familyaccountmanager.application.port.BudgetQueryService;
 import ru.dorin.familyaccountmanager.application.port.BudgetUseCaseService;
 import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.account.Money;

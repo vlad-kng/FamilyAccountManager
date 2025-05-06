@@ -7,7 +7,8 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import ru.dorin.familyaccountmanager.application.port.AccountQueryService;
-import ru.dorin.familyaccountmanager.application.port.FamilyService;
+import ru.dorin.familyaccountmanager.application.port.FamilyQueryService;
+import ru.dorin.familyaccountmanager.application.port.FamilyUseCaseService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
 import ru.dorin.familyaccountmanager.domain.family.Family;
@@ -20,22 +21,23 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 public class FamilyResolver {
-    private final FamilyService familyService;
+    private final FamilyQueryService familyQueryService;
+    private final FamilyUseCaseService familyUseCaseService;
     private final AccountQueryService accountQueryService;
 
     @QueryMapping
     public Family getFamily(@Argument UUID id) {
-        return familyService.getFamily(new FamilyId(id));
+        return familyQueryService.getFamily(new FamilyId(id));
     }
 
     @MutationMapping
     public FamilyId createFamily(@Argument String surname) {
-        return familyService.createFamily(surname);
+        return familyUseCaseService.createFamily(surname);
     }
 
     @MutationMapping
     public boolean addMember(@Argument UUID familyId, @Argument String memberName, @Argument Role role) {
-        familyService.addMember(new FamilyId(familyId), memberName, role);
+        familyUseCaseService.addMember(new FamilyId(familyId), memberName, role);
         return true;
     }
 

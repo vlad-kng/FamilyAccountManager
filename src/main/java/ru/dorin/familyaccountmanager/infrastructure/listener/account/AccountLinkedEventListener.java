@@ -1,9 +1,10 @@
 package ru.dorin.familyaccountmanager.infrastructure.listener.account;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import ru.dorin.familyaccountmanager.application.integration.event.LinkAccountToFamilyIntegrationEvent;
 import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.application.port.FamilyService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.event.account.AccountLinkedEvent;
 
@@ -11,7 +12,7 @@ import ru.dorin.familyaccountmanager.domain.event.account.AccountLinkedEvent;
 @RequiredArgsConstructor
 public class AccountLinkedEventListener implements ProcessingEventListener<Account, AccountLinkedEvent> {
 
-    private final FamilyService familyService;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public Class<AccountLinkedEvent> eventType() {
@@ -20,7 +21,7 @@ public class AccountLinkedEventListener implements ProcessingEventListener<Accou
 
     @Override
     public void afterStore(AccountLinkedEvent event) {
-        //TODO integrationEvent
-        familyService.linkAccountToFamily(event.familyId(), event.accountId());
+        var integrationEvent = new LinkAccountToFamilyIntegrationEvent(event.accountId(), event.familyId(), event.occurredAt());
+        publisher.publishEvent(integrationEvent);
     }
 }
