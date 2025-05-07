@@ -6,17 +6,16 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
-import ru.dorin.familyaccountmanager.domain.family.Family;
-import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
-import ru.dorin.familyaccountmanager.domain.port.query.FamilyQueryService;
-import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.account.AccountType;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.account.TransactionDTO;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
+import ru.dorin.familyaccountmanager.domain.family.Family;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.domain.port.query.FamilyQueryService;
+import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -47,13 +46,6 @@ public class AccountResolver {
     @SchemaMapping(typeName = "Account", field = "family")
     public Family getFamilyForAccount(Account account) {
         return familyQueryService.getFamily(account.getFamilyId());
-    }
-
-    @MutationMapping
-    public AccountId createAccount(@Argument String accountName,
-                                   @Argument AccountType accountType,
-                                   @Argument String balance) {
-        return accountUseCaseService.createAccount(accountName, accountType, balance);
     }
 
     @MutationMapping

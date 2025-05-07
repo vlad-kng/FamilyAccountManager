@@ -1,0 +1,10 @@
+package ru.dorin.familyaccountmanager.application.integration.publisher;
+
+import ru.dorin.familyaccountmanager.application.integration.event.IntegrationEvent;
+
+import java.util.List;
+
+public interface IntegrationEventPublisher {
+    <E extends IntegrationEvent> void publish(E event);
+    <E extends IntegrationEvent> void publish(List<E> eventList);
+}

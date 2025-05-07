@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-    createAccount(accountName: String!, accountType: AccountType!, balance: String!): ID!
+    createAccount(accountName: String!, accountType: AccountType!, balance: String!): CreateAggregatePayload!
     increaseBalance(id: ID!, amount: String): Boolean
     withdrawBalance(id: ID!, amount: String, category: BudgetCategory): Boolean
     transferMoney(from: ID!, to: ID!, amount: String): Boolean
@@ -32,4 +32,14 @@ type Transaction {
     amount: Float
     occurredAt: String
     description: String
+}
+
+type CreateAggregatePayload {
+    ok: ID
+    error: ErrorResponse
+}
+
+type ErrorResponse {
+    errorCode: String
+    message: String
 }

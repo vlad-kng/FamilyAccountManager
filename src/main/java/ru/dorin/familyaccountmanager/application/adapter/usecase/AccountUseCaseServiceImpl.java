@@ -2,24 +2,20 @@ package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
-import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
 import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.account.AccountName;
-import ru.dorin.familyaccountmanager.domain.account.AccountType;
 import ru.dorin.familyaccountmanager.domain.account.Money;
 import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
-import ru.dorin.familyaccountmanager.domain.event.account.AccountCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.AccountLinkedEvent;
-import ru.dorin.familyaccountmanager.domain.event.account.InitialBalanceEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.MoneyDepositedEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.MoneyTransferReceivedEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.MoneyWithdrawalEvent;
 import ru.dorin.familyaccountmanager.domain.event.account.TransferMoneyEvent;
 import ru.dorin.familyaccountmanager.domain.exception.NotEnoughMoneyException;
 import ru.dorin.familyaccountmanager.domain.family.FamilyId;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -30,18 +26,6 @@ import java.util.List;
 public class AccountUseCaseServiceImpl implements AccountUseCaseService {
     private final AccountQueryService accountQueryService;
     private final DomainEventPublisher publisher;
-
-    @Override
-    public AccountId createAccount(String name, AccountType type, String initialBalance) {
-        AccountId id = new AccountId();
-        AccountName accountName = new AccountName(name);
-        BigDecimal balance = new BigDecimal(initialBalance);
-        Money money = new Money(balance);
-        var createdEvent = new AccountCreatedEvent(id, accountName, type, Instant.now());
-        var initialBalanceIncreaseEvent = new InitialBalanceEvent(id, money, Instant.now());
-        publisher.publish(List.of(createdEvent, initialBalanceIncreaseEvent));
-        return id;
-    }
 
     @Override
     public boolean increaseBalance(AccountId accountId, BigDecimal amount) {

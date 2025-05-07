@@ -1,20 +1,20 @@
 package ru.dorin.familyaccountmanager.infrastructure.listener.account;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import ru.dorin.familyaccountmanager.application.integration.event.WithdrawBalanceBudgetEvent;
+import ru.dorin.familyaccountmanager.application.integration.publisher.IntegrationEventPublisher;
 import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
 import ru.dorin.familyaccountmanager.domain.account.Account;
 import ru.dorin.familyaccountmanager.domain.event.account.MoneyWithdrawalEvent;
-import ru.dorin.familyaccountmanager.application.integration.event.WithdrawBalanceBudgetEvent;
+import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
 
 @Component
 @RequiredArgsConstructor
 public class WithdrawalEventListener implements ProcessingEventListener<Account, MoneyWithdrawalEvent> {
 
     private final AccountQueryService accountQueryService;
-    private final ApplicationEventPublisher publisher;
+    private final IntegrationEventPublisher publisher;
 
     @Override
     public Class<MoneyWithdrawalEvent> eventType() {
@@ -27,7 +27,7 @@ public class WithdrawalEventListener implements ProcessingEventListener<Account,
         if (account.getFamilyId() != null) {
             //TODO make ALL accounts with familyId
             var appEvent = new WithdrawBalanceBudgetEvent(account.getFamilyId(), event.category(), event.money(), event.occurredAt());
-            publisher.publishEvent(appEvent);
+            publisher.publish(appEvent);
         }
     }
 }
