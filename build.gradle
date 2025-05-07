@@ -41,9 +41,13 @@ dependencies {
 }
 
 generateJava {
-    schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
+    schemaPaths = ["${projectDir}/src/main/resources/graphql"]
     packageName = 'ru.dorin.familyaccountmanager.codegen'
     generateClient = true
+    language = "JAVA"
+    typeMapping = [
+        "YearMonthScalar": "java.time.YearMonth"
+    ]
 }
 
 tasks.named('test') {
