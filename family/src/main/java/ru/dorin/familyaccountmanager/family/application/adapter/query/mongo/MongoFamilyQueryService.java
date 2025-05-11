@@ -1,12 +1,12 @@
-package ru.dorin.familyaccountmanager.family.application.adapter.query.inmemory;
+package ru.dorin.familyaccountmanager.family.application.adapter.query.mongo;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.family.domain.aggregate.Family;
 import ru.dorin.familyaccountmanager.family.domain.aggregate.FamilyId;
-import ru.dorin.familyaccountmanager.family.domain.port.FamilyQueryService;
 import ru.dorin.familyaccountmanager.family.domain.event.FamilyEvent;
+import ru.dorin.familyaccountmanager.family.domain.port.FamilyQueryService;
 import ru.dorin.familyaccountmanager.platform.domain.port.EventStore;
 
 import java.util.UUID;

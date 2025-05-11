@@ -4,3 +4,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/event-store
+
+application:
+  eventStore:
+    type: mongo

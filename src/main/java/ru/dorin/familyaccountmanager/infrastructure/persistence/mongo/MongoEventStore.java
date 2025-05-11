@@ -1,6 +1,7 @@
 package ru.dorin.familyaccountmanager.infrastructure.persistence.mongo;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 import ru.dorin.familyaccountmanager.platform.domain.port.EventStore;
@@ -18,6 +19,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Repository
 @RequiredArgsConstructor
+@ConditionalOnProperty(value = "application.eventStore.type", havingValue = "mongo")
 public class MongoEventStore<Aggregate extends AbstractDomainAggregate<Aggregate>, Event extends DomainEvent<Aggregate>>
         implements EventStore<Aggregate, Event> {
 

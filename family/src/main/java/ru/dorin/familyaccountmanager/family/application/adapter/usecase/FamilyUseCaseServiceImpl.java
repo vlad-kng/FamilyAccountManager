@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class FamilyUserCaseServiceImpl implements FamilyUseCaseService {
+public class FamilyUseCaseServiceImpl implements FamilyUseCaseService {
     private final DomainEventPublisher publisher;
 
     @Override
