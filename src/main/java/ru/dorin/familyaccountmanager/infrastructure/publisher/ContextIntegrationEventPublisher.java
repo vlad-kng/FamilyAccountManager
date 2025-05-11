@@ -3,7 +3,7 @@ package ru.dorin.familyaccountmanager.infrastructure.publisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
-import ru.dorin.familyaccountmanager.application.integration.event.IntegrationEvent;
+import ru.dorin.familyaccountmanager.integration.event.IntegrationEvent;
 import ru.dorin.familyaccountmanager.application.integration.publisher.IntegrationEventPublisher;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package ru.dorin.familyaccountmanager.infrastructure.listener.mongo;
 
 import org.springframework.stereotype.Component;
-import ru.dorin.familyaccountmanager.application.listener.AbstractStoringEventListener;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
+import ru.dorin.familyaccountmanager.platform.domain.listener.AbstractStoringEventListener;
+import ru.dorin.familyaccountmanager.platform.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.infrastructure.persistence.mongo.MongoEventStore;
 
 @Component

@@ -2,14 +2,14 @@ package ru.dorin.familyaccountmanager.application.adapter.query.inmemory;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
-import ru.dorin.familyaccountmanager.domain.port.EventStore;
+import ru.dorin.familyaccountmanager.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.platform.domain.port.EventStore;
 import ru.dorin.familyaccountmanager.application.utils.MessageResolver;
-import ru.dorin.familyaccountmanager.domain.account.Account;
-import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.account.TransactionDTO;
-import ru.dorin.familyaccountmanager.domain.event.account.AccountEvent;
-import ru.dorin.familyaccountmanager.domain.event.account.AccountTransactionEvent;
+import ru.dorin.familyaccountmanager.account.Account;
+import ru.dorin.familyaccountmanager.account.AccountId;
+import ru.dorin.familyaccountmanager.account.TransactionDTO;
+import ru.dorin.familyaccountmanager.event.account.AccountEvent;
+import ru.dorin.familyaccountmanager.event.account.AccountTransactionEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;

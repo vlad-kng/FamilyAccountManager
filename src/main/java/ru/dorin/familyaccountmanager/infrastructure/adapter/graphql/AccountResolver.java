@@ -6,16 +6,16 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
-import ru.dorin.familyaccountmanager.domain.account.Account;
-import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.account.Money;
-import ru.dorin.familyaccountmanager.domain.account.TransactionDTO;
-import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
-import ru.dorin.familyaccountmanager.domain.family.Family;
-import ru.dorin.familyaccountmanager.domain.family.FamilyId;
-import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
-import ru.dorin.familyaccountmanager.domain.port.query.FamilyQueryService;
-import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
+import ru.dorin.familyaccountmanager.family.domain.aggregate.Family;
+import ru.dorin.familyaccountmanager.account.Account;
+import ru.dorin.familyaccountmanager.account.AccountId;
+import ru.dorin.familyaccountmanager.account.TransactionDTO;
+import ru.dorin.familyaccountmanager.budget.BudgetCategory;
+import ru.dorin.familyaccountmanager.infrastructure.adapter.mapper.AccountToViewMapper;
+import ru.dorin.familyaccountmanager.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.port.usecase.AccountUseCaseService;
+import ru.dorin.familyaccountmanager.integration.domain.account.AccountView;
+import ru.dorin.familyaccountmanager.platform.domain.valueobject.Money;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -26,11 +26,11 @@ import java.util.UUID;
 public class AccountResolver {
     private final AccountUseCaseService accountUseCaseService;
     private final AccountQueryService accountQueryService;
-    private final FamilyQueryService familyQueryService;
 
     @QueryMapping
-    public Account getAccount(@Argument UUID id) {
-        return accountQueryService.getAccount(new AccountId(id));
+    public AccountView getAccount(@Argument UUID id) {
+        Account account = accountQueryService.getAccount(new AccountId(id));
+        return AccountToViewMapper.map(account);
     }
 
     @QueryMapping
@@ -39,13 +39,15 @@ public class AccountResolver {
     }
 
     @SchemaMapping(typeName = "Account", field = "transactions")
-    public List<TransactionDTO> getTransactionsForAccount(Account account) {
-        return accountQueryService.getTransactions(account.getId());
+    public List<TransactionDTO> getTransactionsForAccount(AccountView account) {
+        return accountQueryService.getTransactions(new AccountId(account.id()));
     }
 
-    @SchemaMapping(typeName = "Account", field = "family")
-    public Family getFamilyForAccount(Account account) {
-        return familyQueryService.getFamily(account.getFamilyId());
+    @SchemaMapping(typeName = "Family", field = "accounts")
+    public List<AccountView> getAccounts(Family family) {
+        List<UUID> accountIds = family.getAccountIds();
+        return accountQueryService.getAccounts(accountIds.stream().map(AccountId::new).toList())
+                .stream().map(AccountToViewMapper::map).toList();
     }
 
     @MutationMapping
@@ -63,7 +65,7 @@ public class AccountResolver {
 
     @MutationMapping
     public boolean linkAccount(@Argument UUID familyId, @Argument UUID accountId) {
-        accountUseCaseService.linkAccountToFamily(new AccountId(accountId), new FamilyId(familyId));
+        accountUseCaseService.linkAccountToFamily(accountId, familyId);
         return true;
     }
 

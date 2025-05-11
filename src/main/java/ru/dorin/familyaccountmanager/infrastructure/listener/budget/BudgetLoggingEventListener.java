@@ -2,9 +2,9 @@ package ru.dorin.familyaccountmanager.infrastructure.listener.budget;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.dorin.familyaccountmanager.domain.budget.Budget;
-import ru.dorin.familyaccountmanager.domain.event.budget.BudgetEvent;
-import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
+import ru.dorin.familyaccountmanager.budget.Budget;
+import ru.dorin.familyaccountmanager.event.budget.BudgetEvent;
+import ru.dorin.familyaccountmanager.platform.domain.listener.ProcessingEventListener;
 
 @Component
 @Slf4j

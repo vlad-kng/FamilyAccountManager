@@ -1,11 +1,11 @@
 package ru.dorin.familyaccountmanager.infrastructure.listener;
 
 import org.springframework.stereotype.Component;
-import ru.dorin.familyaccountmanager.application.listener.AbstractStoringEventListener;
-import ru.dorin.familyaccountmanager.application.listener.DomainEventListener;
-import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
+import ru.dorin.familyaccountmanager.platform.domain.listener.AbstractStoringEventListener;
+import ru.dorin.familyaccountmanager.platform.domain.listener.DomainEventListener;
+import ru.dorin.familyaccountmanager.platform.domain.listener.ProcessingEventListener;
+import ru.dorin.familyaccountmanager.platform.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.platform.domain.event.DomainEvent;
 
 import java.util.List;
 import java.util.Map;

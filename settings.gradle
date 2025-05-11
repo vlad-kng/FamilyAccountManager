@@ -1,1 +1,5 @@
 rootProject.name = 'FamilyAccountManager'
+include 'platform'
+include 'budget'
+include 'family'
+include 'bounded-context-integration'

@@ -1,7 +1,7 @@
 package ru.dorin.familyaccountmanager.infrastructure.adapter.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import ru.dorin.familyaccountmanager.domain.account.AccountType;
+import ru.dorin.familyaccountmanager.account.AccountType;
 
 public record CreateAccountDto(
         @Schema(description = "Название счета")

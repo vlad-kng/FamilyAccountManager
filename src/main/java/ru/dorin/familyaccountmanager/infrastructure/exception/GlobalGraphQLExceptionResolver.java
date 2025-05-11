@@ -6,6 +6,7 @@ import graphql.schema.DataFetchingEnvironment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.stereotype.Component;
+import ru.dorin.familyaccountmanager.platform.domain.exception.LocalizedException;
 
 /**
  * GraphQL exception resolver to resolve application exception to GQL format

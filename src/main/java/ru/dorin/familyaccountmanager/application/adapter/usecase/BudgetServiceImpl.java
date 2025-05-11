@@ -4,21 +4,22 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import ru.dorin.familyaccountmanager.domain.port.query.BudgetQueryService;
-import ru.dorin.familyaccountmanager.domain.port.usecase.BudgetUseCaseService;
-import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
-import ru.dorin.familyaccountmanager.domain.account.Money;
-import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
-import ru.dorin.familyaccountmanager.domain.budget.BudgetId;
-import ru.dorin.familyaccountmanager.domain.event.budget.BudgetCreatedEvent;
-import ru.dorin.familyaccountmanager.domain.event.budget.BudgetSpentEvent;
-import ru.dorin.familyaccountmanager.application.integration.event.WithdrawBalanceBudgetEvent;
-import ru.dorin.familyaccountmanager.domain.exception.BudgetAlreadyCreatedException;
-import ru.dorin.familyaccountmanager.domain.family.FamilyId;
+import ru.dorin.familyaccountmanager.integration.event.WithdrawBalanceBudgetEvent;
+import ru.dorin.familyaccountmanager.budget.BudgetCategory;
+import ru.dorin.familyaccountmanager.budget.BudgetId;
+import ru.dorin.familyaccountmanager.event.budget.BudgetCreatedEvent;
+import ru.dorin.familyaccountmanager.event.budget.BudgetSpentEvent;
+import ru.dorin.familyaccountmanager.exception.BudgetAlreadyCreatedException;
+import ru.dorin.familyaccountmanager.port.query.BudgetQueryService;
+import ru.dorin.familyaccountmanager.port.usecase.BudgetUseCaseService;
+import ru.dorin.familyaccountmanager.platform.domain.publisher.DomainEventPublisher;
+import ru.dorin.familyaccountmanager.platform.domain.valueobject.Money;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.YearMonth;
 import java.time.ZoneId;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class BudgetServiceImpl implements BudgetUseCaseService {
     private final DomainEventPublisher publisher;
 
     @Override
-    public BudgetId createBudget(FamilyId familyId, BudgetCategory category, YearMonth period, Money limits) {
+    public BudgetId createBudget(UUID familyId, BudgetCategory category, YearMonth period, Money limits) {
         budgetQueryService.getBudgets(familyId)
                 .stream()
                 .filter(budget -> budget.similarCategories(category))
@@ -43,7 +44,7 @@ public class BudgetServiceImpl implements BudgetUseCaseService {
         return id;
     }
 
-    public void spend(FamilyId familyId, BudgetCategory category, Money money, Instant occurredAt) {
+    public void spend(UUID familyId, BudgetCategory category, Money money, Instant occurredAt) {
         budgetQueryService.getBudgets(familyId)
                 .stream()
                 .filter(budget -> budget.similarCategories(category))
@@ -63,6 +64,6 @@ public class BudgetServiceImpl implements BudgetUseCaseService {
 
     @EventListener
     public void handle(WithdrawBalanceBudgetEvent event) {
-        spend(event.familyId(), event.category(), event.money(), event.occurredAt());
+        spend(event.familyId(), BudgetCategory.valueOf(event.category()), new Money(new BigDecimal(event.money())), event.occurredAt());
     }
 }

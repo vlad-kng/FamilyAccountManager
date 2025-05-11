@@ -3,13 +3,14 @@ package ru.dorin.familyaccountmanager.infrastructure.persistence.mongo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
-import ru.dorin.familyaccountmanager.domain.port.EventStore;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.DomainId;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
+import ru.dorin.familyaccountmanager.platform.domain.port.EventStore;
+import ru.dorin.familyaccountmanager.platform.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.platform.domain.DomainId;
+import ru.dorin.familyaccountmanager.platform.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.infrastructure.config.EventObjectMapper;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -61,7 +62,7 @@ public class MongoEventStore<Aggregate extends AbstractDomainAggregate<Aggregate
     }
 
     private String generateId(Event event) {
-        return event.getAggregateId() + "-" + event.occurredAt().toEpochMilli();
+        return event.getAggregateId() + "-" + UUID.randomUUID();
     }
 
     @Override

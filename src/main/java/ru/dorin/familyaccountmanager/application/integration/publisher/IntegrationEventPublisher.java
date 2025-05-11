@@ -1,6 +1,6 @@
 package ru.dorin.familyaccountmanager.application.integration.publisher;
 
-import ru.dorin.familyaccountmanager.application.integration.event.IntegrationEvent;
+import ru.dorin.familyaccountmanager.integration.event.IntegrationEvent;
 
 import java.util.List;
 

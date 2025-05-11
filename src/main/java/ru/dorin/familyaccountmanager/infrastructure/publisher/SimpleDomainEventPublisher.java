@@ -2,11 +2,11 @@ package ru.dorin.familyaccountmanager.infrastructure.publisher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
-import ru.dorin.familyaccountmanager.application.listener.AbstractStoringEventListener;
-import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
+import ru.dorin.familyaccountmanager.platform.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.platform.domain.event.DomainEvent;
+import ru.dorin.familyaccountmanager.platform.domain.listener.AbstractStoringEventListener;
+import ru.dorin.familyaccountmanager.platform.domain.listener.ProcessingEventListener;
+import ru.dorin.familyaccountmanager.platform.domain.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.infrastructure.listener.DomainEventListenerRegistry;
 import ru.dorin.familyaccountmanager.infrastructure.listener.mongo.GenericDomainEventMongoListener;
 

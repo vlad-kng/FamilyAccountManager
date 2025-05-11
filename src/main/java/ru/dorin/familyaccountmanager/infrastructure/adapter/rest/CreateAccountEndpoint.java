@@ -10,8 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.port.usecase.CreateAccountUseCase;
+import ru.dorin.familyaccountmanager.account.AccountId;
+import ru.dorin.familyaccountmanager.port.usecase.CreateAccountUseCase;
 import ru.dorin.familyaccountmanager.infrastructure.adapter.dto.CreateAccountDto;
 import ru.dorin.familyaccountmanager.infrastructure.adapter.graphql.ErrorResponse;
 

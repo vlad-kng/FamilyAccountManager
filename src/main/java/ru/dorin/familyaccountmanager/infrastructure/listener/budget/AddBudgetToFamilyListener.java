@@ -2,11 +2,11 @@ package ru.dorin.familyaccountmanager.infrastructure.listener.budget;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.dorin.familyaccountmanager.application.integration.event.AddBudgetIntegrationEvent;
+import ru.dorin.familyaccountmanager.integration.event.AddBudgetIntegrationEvent;
 import ru.dorin.familyaccountmanager.application.integration.publisher.IntegrationEventPublisher;
-import ru.dorin.familyaccountmanager.application.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.domain.budget.Budget;
-import ru.dorin.familyaccountmanager.domain.event.budget.BudgetCreatedEvent;
+import ru.dorin.familyaccountmanager.platform.domain.listener.ProcessingEventListener;
+import ru.dorin.familyaccountmanager.budget.Budget;
+import ru.dorin.familyaccountmanager.event.budget.BudgetCreatedEvent;
 
 @Component
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ public class AddBudgetToFamilyListener implements ProcessingEventListener<Budget
 
     @Override
     public void afterStore(BudgetCreatedEvent event) {
-        var integrationEvent = new AddBudgetIntegrationEvent(event.id(), event.familyId());
+        var integrationEvent = new AddBudgetIntegrationEvent(event.id().getId(), event.familyId());
         publisher.publish(integrationEvent);
     }
 }

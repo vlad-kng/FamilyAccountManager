@@ -2,24 +2,24 @@ package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dorin.familyaccountmanager.application.publisher.DomainEventPublisher;
-import ru.dorin.familyaccountmanager.domain.account.Account;
-import ru.dorin.familyaccountmanager.domain.account.AccountId;
-import ru.dorin.familyaccountmanager.domain.account.Money;
-import ru.dorin.familyaccountmanager.domain.budget.BudgetCategory;
-import ru.dorin.familyaccountmanager.domain.event.account.AccountLinkedEvent;
-import ru.dorin.familyaccountmanager.domain.event.account.MoneyDepositedEvent;
-import ru.dorin.familyaccountmanager.domain.event.account.MoneyTransferReceivedEvent;
-import ru.dorin.familyaccountmanager.domain.event.account.MoneyWithdrawalEvent;
-import ru.dorin.familyaccountmanager.domain.event.account.TransferMoneyEvent;
-import ru.dorin.familyaccountmanager.domain.exception.NotEnoughMoneyException;
-import ru.dorin.familyaccountmanager.domain.family.FamilyId;
-import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
-import ru.dorin.familyaccountmanager.domain.port.usecase.AccountUseCaseService;
+import ru.dorin.familyaccountmanager.account.Account;
+import ru.dorin.familyaccountmanager.account.AccountId;
+import ru.dorin.familyaccountmanager.budget.BudgetCategory;
+import ru.dorin.familyaccountmanager.event.account.AccountLinkedEvent;
+import ru.dorin.familyaccountmanager.event.account.MoneyDepositedEvent;
+import ru.dorin.familyaccountmanager.event.account.MoneyTransferReceivedEvent;
+import ru.dorin.familyaccountmanager.event.account.MoneyWithdrawalEvent;
+import ru.dorin.familyaccountmanager.event.account.TransferMoneyEvent;
+import ru.dorin.familyaccountmanager.port.query.AccountQueryService;
+import ru.dorin.familyaccountmanager.port.usecase.AccountUseCaseService;
+import ru.dorin.familyaccountmanager.platform.domain.exception.NotEnoughMoneyException;
+import ru.dorin.familyaccountmanager.platform.domain.publisher.DomainEventPublisher;
+import ru.dorin.familyaccountmanager.platform.domain.valueobject.Money;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -48,8 +48,8 @@ public class AccountUseCaseServiceImpl implements AccountUseCaseService {
     }
 
     @Override
-    public void linkAccountToFamily(AccountId accountId, FamilyId familyId) {
-        var event = new AccountLinkedEvent(accountId, familyId, Instant.now());
+    public void linkAccountToFamily(UUID accountId, UUID familyId) {
+        var event = new AccountLinkedEvent(new AccountId(accountId), familyId, Instant.now());
         publisher.publish(event);
     }
 
