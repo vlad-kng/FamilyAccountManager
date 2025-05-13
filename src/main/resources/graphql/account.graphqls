@@ -4,7 +4,7 @@ type Query {
 }
 
 type Mutation {
-    createAccount(accountName: String!, accountType: AccountType!, balance: String!): CreateAggregatePayload!
+    createAccount(accountName: String!, accountType: AccountType!, balance: String!, familyId: ID!): CreateAggregatePayload!
     increaseBalance(id: ID!, amount: String): Boolean
     withdrawBalance(id: ID!, amount: String, category: BudgetCategory): Boolean
     transferMoney(from: ID!, to: ID!, amount: String): Boolean

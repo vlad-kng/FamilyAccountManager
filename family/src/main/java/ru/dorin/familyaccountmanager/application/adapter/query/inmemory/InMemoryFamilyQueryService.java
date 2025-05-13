@@ -17,10 +17,6 @@ public class InMemoryFamilyQueryService implements FamilyQueryService {
     private final EventStore<Family, FamilyEvent> eventStore;
 
     public Family getFamily(UUID familyId) {
-        FamilyId id = new FamilyId(familyId);
-        var events = eventStore.load(id);
-        Family family = new Family(id);
-        family.recreateFrom(events);
-        return family;
+        return Family.recreateFromEvents(eventStore.load(new FamilyId(familyId)));
     }
 }

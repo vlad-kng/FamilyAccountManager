@@ -9,6 +9,7 @@ import ru.dorin.familyaccountmanager.domain.event.FamilyEvent;
 import ru.dorin.familyaccountmanager.domain.port.FamilyQueryService;
 import ru.dorin.familyaccountmanager.integration.domain.budget.BudgetIdQuery;
 import ru.dorin.familyaccountmanager.domain.port.EventStore;
+import ru.dorin.familyaccountmanager.integration.domain.family.FamilyIdQuery;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,14 +17,11 @@ import java.util.UUID;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class MongoFamilyQueryService implements FamilyQueryService, BudgetIdQuery {
+public class MongoFamilyQueryService implements FamilyQueryService, BudgetIdQuery, FamilyIdQuery {
     private final EventStore<Family, FamilyEvent> eventStore;
 
     public Family getFamily(FamilyId familyId) {
-        var events = eventStore.load(familyId);
-        Family family = new Family(familyId);
-        family.recreateFrom(events);
-        return family;
+        return Family.recreateFromEvents(eventStore.load(familyId));
     }
 
     @Override
@@ -34,5 +32,10 @@ public class MongoFamilyQueryService implements FamilyQueryService, BudgetIdQuer
     @Override
     public List<UUID> getBudgetIds(UUID familyUUID) {
         return getFamily(familyUUID).getBudgetIds();
+    }
+
+    @Override
+    public boolean isFamilyExist(UUID familyId) {
+        return eventStore.contains(new FamilyId(familyId));
     }
 }

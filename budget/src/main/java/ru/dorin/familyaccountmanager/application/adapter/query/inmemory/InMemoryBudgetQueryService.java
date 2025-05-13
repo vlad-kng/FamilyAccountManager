@@ -20,9 +20,7 @@ public class InMemoryBudgetQueryService implements BudgetQueryService {
     private final BudgetIdQuery budgetIdQuery;
 
     public Budget getBudget(BudgetId budgetId) {
-        Budget budget = new Budget(budgetId);
-        budget.recreateFrom(eventStore.load(budgetId));
-        return budget;
+        return Budget.recreateFromEvents(eventStore.load(budgetId));
     }
 
     public List<Budget> getBudgets(UUID familyId) {
@@ -31,6 +29,6 @@ public class InMemoryBudgetQueryService implements BudgetQueryService {
     }
 
     public List<Budget> getBudgets(List<BudgetId> budgetIds) {
-        return eventStore.loadAggregates(budgetIds, Budget::new);
+        return eventStore.loadAggregates(budgetIds, Budget::recreateFromEvents);
     }
 }

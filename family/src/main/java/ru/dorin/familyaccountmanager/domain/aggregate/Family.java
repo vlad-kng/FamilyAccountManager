@@ -3,6 +3,7 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.domain.event.FamilyEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,14 +13,19 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Family extends AbstractDomainAggregate<Family> {
-    private final FamilyId id;
+    private FamilyId id;
     private Surname surname;
     private final List<Member> members = new ArrayList<>();
     private final List<UUID> accountIds = new ArrayList<>();
     private final List<UUID> budgetIds = new ArrayList<>();
+    private final List<FamilyEvent> domainEvents = new ArrayList<>();
 
-    public Family(FamilyId id) {
-        this.id = id;
+    private Family() {
+    }
+    public static Family recreateFromEvents(List<FamilyEvent> events) {
+        Family family = new Family();
+        family.recreateFrom(events);
+        return family;
     }
 
     public void addMember(Member member) {

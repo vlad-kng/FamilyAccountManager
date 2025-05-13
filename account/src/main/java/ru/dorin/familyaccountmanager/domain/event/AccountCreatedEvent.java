@@ -7,12 +7,14 @@ import ru.dorin.familyaccountmanager.domain.aggregate.AccountName;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountType;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @JsonTypeName("AccountCreated")
 public record AccountCreatedEvent(
         AccountId accountId,
         AccountName accountName,
         AccountType accountType,
+        UUID familyId,
         Instant occurredAt
 ) implements AccountEvent {
 
@@ -29,8 +31,10 @@ public record AccountCreatedEvent(
 
     @Override
     public void applyTo(Account account) {
+        account.setId(accountId);
         account.setAccountType(accountType);
         account.setName(accountName);
+        account.setFamilyId(familyId);
     }
 
     @Override

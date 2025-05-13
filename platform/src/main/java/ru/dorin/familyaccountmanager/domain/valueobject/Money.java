@@ -30,4 +30,8 @@ public record Money(BigDecimal amount) {
     public boolean isGreaterThan(Money other) {
         return this.amount.compareTo(other.amount) >= 0;
     }
+
+    public boolean isLessThan(Money other) {
+        return !isGreaterThan(other);
+    }
 }

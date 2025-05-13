@@ -24,10 +24,7 @@ public class InMemoryAccountQueryService implements AccountQueryService {
 
     @Override
     public Account getAccount(AccountId accountId) {
-        List<AccountEvent> events = eventStore.load(accountId);
-        Account account = new Account(accountId);
-        account.recreateFrom(events);
-        return account;
+        return Account.recreateFromEvents(eventStore.load(accountId));
     }
 
     @Override
@@ -46,6 +43,6 @@ public class InMemoryAccountQueryService implements AccountQueryService {
 
     @Override
     public List<Account> getAccounts(List<AccountId> accountIds) {
-        return eventStore.loadAggregates(accountIds, Account::new);
+        return eventStore.loadAggregates(accountIds, Account::recreateFromEvents);
     }
 }

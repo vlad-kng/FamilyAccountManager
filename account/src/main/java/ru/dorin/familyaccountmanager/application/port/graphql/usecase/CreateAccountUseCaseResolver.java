@@ -23,11 +23,12 @@ public class CreateAccountUseCaseResolver {
     @MutationMapping
     public GraphQLResponse<UUID, ErrorResponse> createAccount(@Argument String accountName,
                                                               @Argument AccountType accountType,
-                                                              @Argument String balance) {
+                                                              @Argument String balance,
+                                                              @Argument UUID familyId) {
 
         var presenter = new CreateAccountPresenter();
 
-        createAccountUseCase.execute(new CreateAccountUseCase.Input(accountName, accountType, new BigDecimal(balance)), presenter);
+        createAccountUseCase.execute(new CreateAccountUseCase.Input(accountName, accountType, new BigDecimal(balance), familyId), presenter);
         return presenter.getResponse();
     }
 

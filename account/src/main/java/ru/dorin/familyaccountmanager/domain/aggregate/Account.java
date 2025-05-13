@@ -3,9 +3,15 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.DomainId;
+import ru.dorin.familyaccountmanager.domain.event.AccountCreatedEvent;
+import ru.dorin.familyaccountmanager.domain.event.AccountEvent;
+import ru.dorin.familyaccountmanager.domain.event.InitialBalanceEvent;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -16,13 +22,38 @@ public class Account extends AbstractDomainAggregate<Account> {
     private AccountType accountType;
     private UUID familyId;
     private Money balance = Money.zero();
+    private final List<AccountEvent> domainEvents = new ArrayList<>();
 
-    public Account(AccountId id) {
-        this.id = id;
+    private Account() {}
+
+    public static Account recreateFromEvents(List<AccountEvent> events) {
+        Account account = new Account();
+        account.recreateFrom(events);
+        return account;
     }
 
-    public Account(DomainId<Account> accountDomainId) {
-        this.id = (AccountId) accountDomainId;
+    private Account(AccountId id, AccountName name, AccountType accountType, UUID familyId, Money initialBalance) {
+        if (accountType.equals(AccountType.SAVING) && initialBalance.isLessThan(new Money(new BigDecimal(20000)))) {
+            throw new IllegalStateException("Initial balance for saving account must be more than 20 thousand");
+        }
+        this.id = id;
+        this.name = name;
+        this.accountType = accountType;
+        this.familyId = familyId;
+        this.balance = initialBalance;
+
+        domainEvents.add(new AccountCreatedEvent(id, name, accountType, familyId, Instant.now()));
+        domainEvents.add(new InitialBalanceEvent(id, initialBalance, Instant.now()));
+    }
+
+    public static Account create(AccountId id, AccountName name, AccountType accountType, UUID familyId, Money initialBalance) {
+        return new Account(id, name, accountType, familyId, initialBalance);
+    }
+
+    public List<AccountEvent> pullDomainEvent() {
+        var copy = List.copyOf(domainEvents);
+        domainEvents.clear();
+        return copy;
     }
 
     public void increaseBalance(Money money) {

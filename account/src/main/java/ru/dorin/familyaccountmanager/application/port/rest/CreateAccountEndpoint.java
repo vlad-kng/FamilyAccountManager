@@ -34,7 +34,7 @@ public class CreateAccountEndpoint {
     @PostMapping("/account")
     public RestResponse<UUID, ErrorResponse> createAccount(@RequestBody CreateAccountDto dto) {
         var presenter = new CreateAccountPresenter();
-        CreateAccountUseCase.Input input = new CreateAccountUseCase.Input(dto.accountName(), dto.accountType(), new BigDecimal(dto.balance()));
+        CreateAccountUseCase.Input input = new CreateAccountUseCase.Input(dto.accountName(), dto.accountType(), new BigDecimal(dto.balance()), dto.familyId());
         createAccountUseCase.execute(input, presenter);
         return presenter.getResponse();
     }

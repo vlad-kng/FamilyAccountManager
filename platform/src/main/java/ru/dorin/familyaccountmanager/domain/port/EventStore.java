@@ -19,13 +19,10 @@ public interface EventStore<
     List<Event> load(DomainId<Aggregate> aggregateId);
 
 
-    default List<Aggregate> loadAggregates(Collection<? extends DomainId<Aggregate>> domainIds, Function<DomainId<Aggregate>, Aggregate> constructor) {
-        return loadAll(domainIds).entrySet().stream()
-                .map(entry -> {
-                    Aggregate aggregate = constructor.apply(entry.getKey());
-                    aggregate.recreateFrom(entry.getValue());
-                    return aggregate;
-                })
+    default List<Aggregate> loadAggregates(Collection<? extends DomainId<Aggregate>> domainIds,
+                                           Function<List<Event>, Aggregate> constructor) {
+        return loadAll(domainIds).values().stream()
+                .map(constructor)
                 .toList();
     }
 

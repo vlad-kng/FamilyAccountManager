@@ -4,10 +4,12 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 import lombok.Getter;
 import lombok.Setter;
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.DomainId;
+import ru.dorin.familyaccountmanager.domain.event.BudgetEvent;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
 
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -26,12 +28,14 @@ public class Budget extends AbstractDomainAggregate<Budget> {
 
     private Money spent = Money.zero();
 
-    public Budget(BudgetId id) {
-        this.id = id;
-    }
+    private final List<BudgetEvent> domainEvents = new ArrayList<>();
 
-    public Budget(DomainId<Budget> budgetDomainId) {
-        this.id = (BudgetId) budgetDomainId;
+    private Budget() {}
+
+    public static Budget recreateFromEvents(List<BudgetEvent> events) {
+        Budget budget = new Budget();
+        budget.recreateFrom(events);
+        return budget;
     }
 
     public void spend(Money money) {
