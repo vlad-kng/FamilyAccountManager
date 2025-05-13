@@ -34,6 +34,7 @@ public class Account extends AbstractDomainAggregate<Account> {
 
     private Account(AccountId id, AccountName name, AccountType accountType, UUID familyId, Money initialBalance) {
         if (accountType.equals(AccountType.SAVING) && initialBalance.isLessThan(new Money(new BigDecimal(20000)))) {
+            //TODO add domain exception
             throw new IllegalStateException("Initial balance for saving account must be more than 20 thousand");
         }
         this.id = id;

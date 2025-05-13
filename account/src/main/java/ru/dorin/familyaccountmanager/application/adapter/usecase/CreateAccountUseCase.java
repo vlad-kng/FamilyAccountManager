@@ -29,6 +29,7 @@ public class CreateAccountUseCase implements UseCaseWithPresenter<CreateAccountU
             Money money = new Money(input.balance());
             boolean familyExist = familyIdQuery.isFamilyExist(input.familyId);
             if (!familyExist) {
+                //TODO add domain exception
                 throw new IllegalStateException("Family not found: " + input.familyId);
             }
             Account account = Account.create(id, accountName, input.accountType, input.familyId, money);
