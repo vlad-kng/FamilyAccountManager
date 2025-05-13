@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'org.springframework.boot' version '3.4.4'
 }
 
 group = 'ru.dorin'
@@ -25,16 +24,12 @@ dependencyManagement {
     }
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['-parameters']
+}
+
 repositories {
     mavenCentral()
-}
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
 }
 
 dependencies {
