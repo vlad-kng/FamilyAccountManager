@@ -10,14 +10,14 @@ import ru.dorin.familyaccountmanager.application.port.graphql.GenericGraphQLPres
 import ru.dorin.familyaccountmanager.application.port.graphql.GraphQLResponse;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountId;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountType;
-import ru.dorin.familyaccountmanager.domain.port.usecase.CreateAccountUseCase;
+import ru.dorin.familyaccountmanager.application.adapter.usecase.CreateAccountUseCase;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
-public class AccountMutationResolver {
+public class CreateAccountUseCaseResolver {
     private final CreateAccountUseCase createAccountUseCase;
 
     @MutationMapping

@@ -22,7 +22,6 @@ public class EventObjectMapper {
         this.mapper = baseMapper.copy();
         Reflections reflections = new Reflections(DomainEvent.class.getPackage().getName());
         Set<Class<? extends DomainEvent>> eventClasses = reflections.getSubTypesOf(DomainEvent.class);
-
         SubtypeResolver resolver = new StdSubtypeResolver();
         for (Class<? extends DomainEvent> eventClass : eventClasses) {
             if (!Modifier.isAbstract(eventClass.getModifiers())) {

@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.domain.port.usecase;
+package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.dorin.familyaccountmanager.application.adapter.dto.CreateAccountDto;
 import ru.dorin.familyaccountmanager.application.port.ErrorResponse;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountId;
-import ru.dorin.familyaccountmanager.domain.port.usecase.CreateAccountUseCase;
+import ru.dorin.familyaccountmanager.application.adapter.usecase.CreateAccountUseCase;
 
 import java.math.BigDecimal;
 import java.util.UUID;
