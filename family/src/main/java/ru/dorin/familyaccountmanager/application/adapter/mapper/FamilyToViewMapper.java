@@ -22,7 +22,7 @@ public class FamilyToViewMapper {
     public static MemberView mapMember(Member member) {
         return new MemberView(
                 member.getId().getId(),
-                member.getName().getName(),
+                member.getName().name(),
                 member.getRole().name());
     }
 }

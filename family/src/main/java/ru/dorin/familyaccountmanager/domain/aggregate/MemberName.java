@@ -1,10 +1,15 @@
 package ru.dorin.familyaccountmanager.domain.aggregate;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@Data
-@AllArgsConstructor
-public class MemberName {
-    private final String name;
+public record MemberName(String name) {
+    @JsonCreator
+    public MemberName {
+    }
+
+    @JsonValue
+    public String toJson() {
+        return name;
+    }
 }

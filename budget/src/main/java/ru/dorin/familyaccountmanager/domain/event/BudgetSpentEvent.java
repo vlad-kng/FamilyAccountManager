@@ -22,7 +22,7 @@ public record BudgetSpentEvent(
 
     @Override
     public void applyTo(Budget budget) {
-        budget.spend(money);
+        budget.addSpent(money);
     }
 
     @Override

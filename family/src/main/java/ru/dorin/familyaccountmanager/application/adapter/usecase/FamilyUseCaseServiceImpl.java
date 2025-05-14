@@ -1,6 +1,8 @@
 package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.dorin.familyaccountmanager.integration.event.AddBudgetIntegrationEvent;
+import ru.dorin.familyaccountmanager.integration.event.BudgetOverLimitEvent;
 import ru.dorin.familyaccountmanager.integration.event.LinkAccountToFamilyIntegrationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -21,6 +23,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FamilyUseCaseServiceImpl implements FamilyUseCaseService {
     private final DomainEventPublisher publisher;
 
@@ -55,6 +58,12 @@ public class FamilyUseCaseServiceImpl implements FamilyUseCaseService {
     @EventListener
     void handle(LinkAccountToFamilyIntegrationEvent event) {
        linkAccountToFamily(new FamilyId(event.familyId()), event.accountId());
+    }
+
+    @EventListener
+    void handle(BudgetOverLimitEvent event) {
+        //TODO notify family parents
+        log.info("Family budget for category: {} exceeded. limit: {}, spent: {}", event.budgetCategory(), event.limit(), event.spent());
     }
 
     @EventListener

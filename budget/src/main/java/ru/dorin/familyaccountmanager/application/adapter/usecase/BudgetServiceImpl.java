@@ -4,13 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import ru.dorin.familyaccountmanager.domain.aggregate.Budget;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetCategory;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetId;
-import ru.dorin.familyaccountmanager.domain.event.BudgetCreatedEvent;
-import ru.dorin.familyaccountmanager.domain.event.BudgetSpentEvent;
+import ru.dorin.familyaccountmanager.integration.event.BudgetOverLimitEvent;
 import ru.dorin.familyaccountmanager.domain.exception.BudgetAlreadyCreatedException;
+import ru.dorin.familyaccountmanager.domain.exception.CreateBudgetException;
 import ru.dorin.familyaccountmanager.domain.port.BudgetQueryService;
 import ru.dorin.familyaccountmanager.domain.port.BudgetUseCaseService;
+import ru.dorin.familyaccountmanager.integration.domain.family.FamilyIdQuery;
+import ru.dorin.familyaccountmanager.integration.event.IntegrationEventPublisher;
 import ru.dorin.familyaccountmanager.integration.event.WithdrawBalanceBudgetEvent;
 import ru.dorin.familyaccountmanager.domain.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
@@ -26,10 +29,16 @@ import java.util.UUID;
 @Slf4j
 public class BudgetServiceImpl implements BudgetUseCaseService {
     private final BudgetQueryService budgetQueryService;
+    private final FamilyIdQuery familyIdQuery;
     private final DomainEventPublisher publisher;
+    private final IntegrationEventPublisher integrationEventPublisher;
 
     @Override
     public BudgetId createBudget(UUID familyId, BudgetCategory category, YearMonth period, Money limits) {
+        boolean familyExist = familyIdQuery.isFamilyExist(familyId);
+        if (!familyExist) {
+            throw new CreateBudgetException(familyId);
+        }
         budgetQueryService.getBudgets(familyId)
                 .stream()
                 .filter(budget -> budget.similarCategories(category))
@@ -38,26 +47,33 @@ public class BudgetServiceImpl implements BudgetUseCaseService {
                 .ifPresent(budget -> {
                     throw new BudgetAlreadyCreatedException(budget.getFamilyId(), budget.getCategory());
                 });
-        BudgetId id = new BudgetId();
-        var createdEvent = new BudgetCreatedEvent(id, familyId, category, period, limits, Instant.now());
-        publisher.publish(createdEvent);
-        return id;
+        Budget budget = Budget.create(familyId, category, period, limits);
+        publisher.publish(budget.pullDomainEvent());
+        return budget.getId();
     }
 
     public void spend(UUID familyId, BudgetCategory category, Money money, Instant occurredAt) {
+        boolean familyExist = familyIdQuery.isFamilyExist(familyId);
+        if (!familyExist) {
+            throw new CreateBudgetException(familyId);
+        }
         budgetQueryService.getBudgets(familyId)
                 .stream()
                 .filter(budget -> budget.similarCategories(category))
                 .filter(budget -> YearMonth.from(occurredAt.atZone(ZoneId.systemDefault())).equals(budget.getPeriod()))
                 .findAny()
                 .ifPresent(budget -> {
-                    var id = budget.getId();
-                    var event = new BudgetSpentEvent(id, category, money, Instant.now());
-                    publisher.publish(event);
-                    if(budget.isOverLimit(money)) {
-                        //TODO Send notification. Not throw
-                        log.info("budget: {} is over limit for category: {}", budget.getId(), category);
-//                        throw new OverBudgetLimitException(budget.getId(), category);
+                    budget.spend(money);
+                    publisher.publish(budget.pullDomainEvent());
+                    if (budget.isOverLimit()) {
+                        integrationEventPublisher.publish(
+                                new BudgetOverLimitEvent(
+                                        budget.getId().getId(),
+                                        budget.getFamilyId(),
+                                        budget.getCategory().name(),
+                                        Instant.now(),
+                                        budget.getLimits().amount(),
+                                        budget.getSpent().amount()));
                     }
                 });
     }

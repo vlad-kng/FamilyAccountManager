@@ -23,6 +23,7 @@ public record FamilyCreatedEvent(
 
     @Override
     public void applyTo(Family family) {
+        family.setId(familyId);
         family.setSurname(surname);
     }
 

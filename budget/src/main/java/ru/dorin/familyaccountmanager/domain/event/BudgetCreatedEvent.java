@@ -32,6 +32,7 @@ public record BudgetCreatedEvent(
 
     @Override
     public void applyTo(Budget budget) {
+        budget.setId(id);
         budget.setFamilyId(familyId);
         budget.setCategory(category);
         budget.setPeriod(period);
