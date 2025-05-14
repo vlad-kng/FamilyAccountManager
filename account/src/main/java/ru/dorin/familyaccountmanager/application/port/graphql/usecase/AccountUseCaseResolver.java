@@ -31,12 +31,6 @@ public class AccountUseCaseResolver {
     }
 
     @MutationMapping
-    public boolean linkAccount(@Argument UUID familyId, @Argument UUID accountId) {
-        accountUseCaseService.linkAccountToFamily(accountId, familyId);
-        return true;
-    }
-
-    @MutationMapping
     public boolean transferMoney(@Argument UUID from,
                                  @Argument UUID to,
                                  @Argument String amount) {

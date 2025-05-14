@@ -3,7 +3,6 @@ package ru.dorin.familyaccountmanager.application.event.publisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.application.event.listener.DomainEventListenerRegistry;
-import ru.dorin.familyaccountmanager.application.event.listener.mongo.GenericDomainEventMongoListener;
 import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.domain.listener.AbstractStoringEventListener;
@@ -35,11 +34,6 @@ public class SimpleDomainEventPublisher implements DomainEventPublisher {
                 (AbstractStoringEventListener<Aggregate, Event>) registry.getStoringListener(getEventInterface(eventType));
         if (storingListener != null) {
             storingListener.store(event);
-        }
-
-        GenericDomainEventMongoListener mongoListener = (GenericDomainEventMongoListener) registry.getStoringListener(DomainEvent.class);
-        if (mongoListener != null) {
-            mongoListener.store(event);
         }
 
         for (ProcessingEventListener<Aggregate, Event> listener : listeners) {

@@ -6,6 +6,12 @@ import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.AccountCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.event.AccountEvent;
 import ru.dorin.familyaccountmanager.domain.event.InitialBalanceEvent;
+import ru.dorin.familyaccountmanager.domain.event.MoneyDepositedEvent;
+import ru.dorin.familyaccountmanager.domain.event.MoneyTransferReceivedEvent;
+import ru.dorin.familyaccountmanager.domain.event.MoneyWithdrawalEvent;
+import ru.dorin.familyaccountmanager.domain.event.TransferMoneyEvent;
+import ru.dorin.familyaccountmanager.domain.exception.InvalidInitialBalanceException;
+import ru.dorin.familyaccountmanager.domain.exception.NotEnoughMoneyException;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
 
 import java.math.BigDecimal;
@@ -34,8 +40,7 @@ public class Account extends AbstractDomainAggregate<Account> {
 
     private Account(AccountId id, AccountName name, AccountType accountType, UUID familyId, Money initialBalance) {
         if (accountType.equals(AccountType.SAVING) && initialBalance.isLessThan(new Money(new BigDecimal(20000)))) {
-            //TODO add domain exception
-            throw new IllegalStateException("Initial balance for saving account must be more than 20 thousand");
+            throw new InvalidInitialBalanceException(id, initialBalance.amount());
         }
         this.id = id;
         this.name = name;
@@ -61,8 +66,35 @@ public class Account extends AbstractDomainAggregate<Account> {
         balance = balance.add(money);
     }
 
-    public void withdrawBalance(Money money) {
+    public void decreaseBalance(Money money) {
+        if (!canWithdrawal(money)) {
+            throw new NotEnoughMoneyException(this.getBalance().amount(), money.amount());
+        }
         balance = balance.subtract(money);
+    }
+
+    public void depositMoney(Money money) {
+        increaseBalance(money);
+        domainEvents.add(new MoneyDepositedEvent(this.id, Instant.now(), money));
+    }
+
+    public void withdrawMoney(Money money) {
+        withdrawMoney(money, DEFAULT_CATEGORY);
+    }
+
+    public void withdrawMoney(Money money, String category) {
+        decreaseBalance(money);
+        domainEvents.add(new MoneyWithdrawalEvent(this.id, category, Instant.now(), money));
+    }
+
+    public void transferMoney(Money money, AccountId to) {
+        decreaseBalance(money);
+        domainEvents.add(new TransferMoneyEvent(this.id, to, Instant.now(), money));
+    }
+
+    public void receiveMoney(Money money, AccountId from) {
+        increaseBalance(money);
+        domainEvents.add(new MoneyTransferReceivedEvent(this.id, from, Instant.now(), money));
     }
 
     public void linkToFamily(UUID familyId) {
@@ -72,4 +104,6 @@ public class Account extends AbstractDomainAggregate<Account> {
     public boolean canWithdrawal(Money money) {
         return balance.isGreaterThan(money);
     }
+
+    public static final String DEFAULT_CATEGORY = "UTILITY";
 }

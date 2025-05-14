@@ -27,7 +27,7 @@ public record MoneyWithdrawalEvent(
 
     @Override
     public void applyTo(Account account) {
-        account.withdrawBalance(money);
+        account.decreaseBalance(money);
     }
 
     @Override

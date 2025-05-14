@@ -26,7 +26,8 @@ public record TransferMoneyEvent(
 
     @Override
     public void applyTo(Account account) {
-        account.withdrawBalance(money);
+        Money balance = account.getBalance();
+        account.setBalance(balance.subtract(money));
     }
 
     @Override

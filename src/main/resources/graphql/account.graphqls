@@ -8,7 +8,6 @@ type Mutation {
     increaseBalance(id: ID!, amount: String): Boolean
     withdrawBalance(id: ID!, amount: String, category: BudgetCategory): Boolean
     transferMoney(from: ID!, to: ID!, amount: String): Boolean
-    linkAccount(accountId: ID!, familyId: ID!): Boolean
 }
 
 type Account {

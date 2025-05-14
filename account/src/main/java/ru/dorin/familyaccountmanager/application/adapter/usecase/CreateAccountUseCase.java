@@ -6,6 +6,7 @@ import ru.dorin.familyaccountmanager.domain.aggregate.Account;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountId;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountName;
 import ru.dorin.familyaccountmanager.domain.aggregate.AccountType;
+import ru.dorin.familyaccountmanager.domain.exception.CreateAccountException;
 import ru.dorin.familyaccountmanager.domain.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.usecase.UseCaseWithPresenter;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
@@ -29,8 +30,7 @@ public class CreateAccountUseCase implements UseCaseWithPresenter<CreateAccountU
             Money money = new Money(input.balance());
             boolean familyExist = familyIdQuery.isFamilyExist(input.familyId);
             if (!familyExist) {
-                //TODO add domain exception
-                throw new IllegalStateException("Family not found: " + input.familyId);
+                throw new CreateAccountException(input.familyId);
             }
             Account account = Account.create(id, accountName, input.accountType, input.familyId, money);
             publisher.publish(account.pullDomainEvent());
