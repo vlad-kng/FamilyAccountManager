@@ -43,3 +43,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.bootJar {
+    archiveFileName.set("family-account-manager.jar")
+}

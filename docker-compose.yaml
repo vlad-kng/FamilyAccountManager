@@ -1,8 +1,26 @@
 version: '3.8'
+
 services:
   mongodb:
-    image: "mongo:6.0"
-    container_name: mongo
-    restart: unless-stopped
+    image: mongo:6.0
+    container_name: fam-mongo
     ports:
       - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  family-account-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fam-app
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://fam-mongo:27017/familydb
+      SPRING_PROFILES_ACTIVE: docker
+
+volumes:
+  mongo_data:
