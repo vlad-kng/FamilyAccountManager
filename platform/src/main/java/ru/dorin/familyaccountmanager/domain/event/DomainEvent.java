@@ -1,8 +1,8 @@
 package ru.dorin.familyaccountmanager.domain.event;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.DomainId;
+import ru.dorin.familyaccountmanager.domain.aggregate.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.domain.aggregate.DomainId;
 
 import java.time.Instant;
 

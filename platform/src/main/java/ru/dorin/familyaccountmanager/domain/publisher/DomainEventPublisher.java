@@ -1,6 +1,6 @@
 package ru.dorin.familyaccountmanager.domain.publisher;
 
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.domain.aggregate.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 
 import java.util.List;

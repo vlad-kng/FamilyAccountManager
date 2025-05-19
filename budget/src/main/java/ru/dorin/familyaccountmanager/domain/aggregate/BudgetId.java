@@ -3,7 +3,6 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.dorin.familyaccountmanager.domain.DomainId;
 
 import java.util.UUID;
 

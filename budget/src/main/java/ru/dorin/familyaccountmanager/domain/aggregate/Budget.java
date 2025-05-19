@@ -4,7 +4,6 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.BudgetCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.event.BudgetEvent;
 import ru.dorin.familyaccountmanager.domain.event.BudgetSpentEvent;

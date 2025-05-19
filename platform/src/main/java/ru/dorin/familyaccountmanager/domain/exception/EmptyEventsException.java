@@ -1,6 +1,6 @@
 package ru.dorin.familyaccountmanager.domain.exception;
 
-import ru.dorin.familyaccountmanager.domain.DomainId;
+import ru.dorin.familyaccountmanager.domain.aggregate.DomainId;
 
 public class EmptyEventsException extends LocalizedException {
     public static final String MESSAGE = "account.events.is.empty";

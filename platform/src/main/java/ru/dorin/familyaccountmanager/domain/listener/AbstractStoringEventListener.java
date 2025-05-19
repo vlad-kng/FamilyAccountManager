@@ -2,7 +2,7 @@ package ru.dorin.familyaccountmanager.domain.listener;
 
 import lombok.RequiredArgsConstructor;
 import ru.dorin.familyaccountmanager.domain.port.EventStore;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.domain.aggregate.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 
 @RequiredArgsConstructor

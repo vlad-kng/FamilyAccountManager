@@ -38,6 +38,7 @@ dependencies {
     implementation project(':account')
     implementation project(':infrastructure')
     implementation project(':bounded-context-integration')
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.4.1'
 }
 tasks.named('test') {
     useJUnitPlatform()

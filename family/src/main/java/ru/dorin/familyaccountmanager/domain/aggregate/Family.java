@@ -2,7 +2,6 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.FamilyEvent;
 
 import java.util.ArrayList;

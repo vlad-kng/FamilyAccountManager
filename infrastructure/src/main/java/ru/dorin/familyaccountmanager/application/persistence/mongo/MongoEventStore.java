@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.dorin.familyaccountmanager.application.config.EventObjectMapper;
 import ru.dorin.familyaccountmanager.domain.port.EventStore;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.DomainId;
+import ru.dorin.familyaccountmanager.domain.aggregate.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.domain.aggregate.DomainId;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 
 import java.util.List;

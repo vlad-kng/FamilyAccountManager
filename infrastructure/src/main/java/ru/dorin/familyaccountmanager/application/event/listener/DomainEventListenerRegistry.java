@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.domain.listener.AbstractStoringEventListener;
 import ru.dorin.familyaccountmanager.domain.listener.DomainEventListener;
 import ru.dorin.familyaccountmanager.domain.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
+import ru.dorin.familyaccountmanager.domain.aggregate.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 
 import java.util.List;

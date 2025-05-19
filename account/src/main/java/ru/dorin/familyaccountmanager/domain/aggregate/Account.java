@@ -2,7 +2,6 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.dorin.familyaccountmanager.domain.AbstractDomainAggregate;
 import ru.dorin.familyaccountmanager.domain.event.AccountCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.event.AccountEvent;
 import ru.dorin.familyaccountmanager.domain.event.InitialBalanceEvent;

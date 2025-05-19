@@ -3,7 +3,7 @@ package ru.dorin.familyaccountmanager.domain.event;
 import ru.dorin.familyaccountmanager.domain.aggregate.Budget;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetCategory;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetId;
-import ru.dorin.familyaccountmanager.domain.DomainId;
+import ru.dorin.familyaccountmanager.domain.aggregate.DomainId;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
 
 import java.time.Instant;

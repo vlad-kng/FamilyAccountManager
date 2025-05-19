@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.domain;
+package ru.dorin.familyaccountmanager.domain.aggregate;
 
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.domain.exception.EmptyEventsException;
