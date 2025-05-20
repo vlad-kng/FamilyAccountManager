@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.application.event.listener;
+package ru.dorin.familyaccountmanager.application.event.domain.listener;
 
 import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.domain.aggregate.Family;

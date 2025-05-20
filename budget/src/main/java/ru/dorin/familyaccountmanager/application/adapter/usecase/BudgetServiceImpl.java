@@ -2,23 +2,20 @@ package ru.dorin.familyaccountmanager.application.adapter.usecase;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.domain.aggregate.Budget;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetCategory;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetId;
-import ru.dorin.familyaccountmanager.integration.event.BudgetOverLimitEvent;
 import ru.dorin.familyaccountmanager.domain.exception.BudgetAlreadyCreatedException;
 import ru.dorin.familyaccountmanager.domain.exception.CreateBudgetException;
 import ru.dorin.familyaccountmanager.domain.port.BudgetQueryService;
 import ru.dorin.familyaccountmanager.domain.port.BudgetUseCaseService;
-import ru.dorin.familyaccountmanager.integration.domain.family.FamilyIdQuery;
-import ru.dorin.familyaccountmanager.integration.event.IntegrationEventPublisher;
-import ru.dorin.familyaccountmanager.integration.event.WithdrawBalanceBudgetEvent;
 import ru.dorin.familyaccountmanager.domain.publisher.DomainEventPublisher;
 import ru.dorin.familyaccountmanager.domain.valueobject.Money;
+import ru.dorin.familyaccountmanager.integration.domain.family.FamilyIdQuery;
+import ru.dorin.familyaccountmanager.integration.event.BudgetOverLimitEvent;
+import ru.dorin.familyaccountmanager.integration.event.publisher.IntegrationEventPublisher;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.YearMonth;
 import java.time.ZoneId;
@@ -76,10 +73,5 @@ public class BudgetServiceImpl implements BudgetUseCaseService {
                                         budget.getSpent().amount()));
                     }
                 });
-    }
-
-    @EventListener
-    public void handle(WithdrawBalanceBudgetEvent event) {
-        spend(event.familyId(), BudgetCategory.valueOf(event.category()), new Money(new BigDecimal(event.money())), event.occurredAt());
     }
 }

@@ -1,10 +1,10 @@
-package ru.dorin.familyaccountmanager.application.event.listener;
+package ru.dorin.familyaccountmanager.application.event.domain.listener;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.domain.aggregate.Budget;
 import ru.dorin.familyaccountmanager.integration.event.AddBudgetIntegrationEvent;
-import ru.dorin.familyaccountmanager.integration.event.IntegrationEventPublisher;
+import ru.dorin.familyaccountmanager.integration.event.publisher.IntegrationEventPublisher;
 import ru.dorin.familyaccountmanager.domain.listener.ProcessingEventListener;
 import ru.dorin.familyaccountmanager.domain.event.BudgetCreatedEvent;
 

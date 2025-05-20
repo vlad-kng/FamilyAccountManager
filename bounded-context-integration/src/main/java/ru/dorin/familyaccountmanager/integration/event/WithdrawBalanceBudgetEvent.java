@@ -10,4 +10,8 @@ public record WithdrawBalanceBudgetEvent (
         String money,
         Instant occurredAt
 ) implements IntegrationEvent {
+    @Override
+    public UUID getAggregateId() {
+        return familyId;
+    }
 }

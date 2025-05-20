@@ -13,4 +13,8 @@ public record BudgetOverLimitEvent(
         BigDecimal spent
 ) implements IntegrationEvent {
 
+    @Override
+    public UUID getAggregateId() {
+        return budgetId;
+    }
 }

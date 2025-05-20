@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.dorin.familyaccountmanager.domain.aggregate.Account;
 import ru.dorin.familyaccountmanager.domain.event.AccountCreatedEvent;
 import ru.dorin.familyaccountmanager.domain.listener.ProcessingEventListener;
-import ru.dorin.familyaccountmanager.integration.event.IntegrationEventPublisher;
+import ru.dorin.familyaccountmanager.integration.event.publisher.IntegrationEventPublisher;
 import ru.dorin.familyaccountmanager.integration.event.LinkAccountToFamilyIntegrationEvent;
 
 @Component

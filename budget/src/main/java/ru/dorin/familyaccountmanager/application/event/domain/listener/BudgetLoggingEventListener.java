@@ -1,4 +1,4 @@
-package ru.dorin.familyaccountmanager.application.event.listener;
+package ru.dorin.familyaccountmanager.application.event.domain.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

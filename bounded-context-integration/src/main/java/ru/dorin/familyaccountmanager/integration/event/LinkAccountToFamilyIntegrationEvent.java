@@ -9,4 +9,8 @@ public record LinkAccountToFamilyIntegrationEvent(
         UUID familyId,
         Instant occurredAt
 ) implements IntegrationEvent {
+    @Override
+    public UUID getAggregateId() {
+        return accountId;
+    }
 }

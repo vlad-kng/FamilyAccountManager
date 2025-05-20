@@ -6,7 +6,7 @@ import ru.dorin.familyaccountmanager.domain.aggregate.Account;
 import ru.dorin.familyaccountmanager.domain.event.MoneyWithdrawalEvent;
 import ru.dorin.familyaccountmanager.domain.port.query.AccountQueryService;
 import ru.dorin.familyaccountmanager.integration.event.WithdrawBalanceBudgetEvent;
-import ru.dorin.familyaccountmanager.integration.event.IntegrationEventPublisher;
+import ru.dorin.familyaccountmanager.integration.event.publisher.IntegrationEventPublisher;
 import ru.dorin.familyaccountmanager.domain.listener.ProcessingEventListener;
 
 @Component

@@ -9,6 +9,37 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: fam-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://kafka:29092,OUTSIDE://0.0.0.0:9092
+      KAFKA_ZOOKEEPER_CONNECT: fam-zookeeper:2181
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: fam-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKER_CONNECT: fam-kafka:9092
+    depends_on:
+      - kafka
+
   family-account-manager:
     build:
       context: .
@@ -17,10 +48,13 @@ services:
     depends_on:
       - mongodb
     ports:
-      - "8081:8080"
+      - "8080:8080"
+      - "5005:5005/tcp"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://fam-mongo:27017/familydb
+      SPRING_DATA_MONGODB_URI: mongodb://fam-mongo:27017/event-store
       SPRING_PROFILES_ACTIVE: docker
+      KAFKA_ENABLED: "true"
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
 
 volumes:
   mongo_data:
