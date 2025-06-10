@@ -44,21 +44,14 @@ public class MongoEventStore<Aggregate extends AbstractDomainAggregate<Aggregate
         }
     }
 
-
     public List<Event> load(DomainId<Aggregate> aggregateId) {
         List<StoredEventDocument> docs = mongoTemplate.find(
                 Query.query(Criteria.where("aggregateId").is(aggregateId.toString())),
                 StoredEventDocument.class
         );
 
-        return docs.stream()
-                .map(doc -> {
-                    try {
-                        return (Event) eventObjectMapper.getMapper().readValue(doc.getEventJson(), DomainEvent.class);
-                    } catch (Exception e) {
-                        throw new RuntimeException("Failed to deserialize event", e);
-                    }
-                })
+        return (List<Event>) docs.stream()
+                .map(doc -> eventObjectMapper.deserialize(doc.getEventType(), doc.getEventJson()))
                 .collect(Collectors.toList());
     }
 
