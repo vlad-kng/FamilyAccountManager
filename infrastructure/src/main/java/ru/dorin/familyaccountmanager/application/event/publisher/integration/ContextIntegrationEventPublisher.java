@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "application.kafka.enabled", havingValue = "false")
+@ConditionalOnProperty(value = "application.integration.publisher", havingValue = "context")
 public class ContextIntegrationEventPublisher implements IntegrationEventPublisher {
     private final ApplicationEventPublisher applicationEventPublisher;
 

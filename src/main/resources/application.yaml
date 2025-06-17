@@ -27,8 +27,12 @@ spring:
 
 application:
   eventStore:
-    type: ${EVENT_STORE_TYPE:mongo}
+    type: ${EVENT_STORE_TYPE:inMemory}
+  integration:
+    publisher: ${PUBLISHER_TYPE:context}
   kafka:
     enabled: ${KAFKA_ENABLED:false}
     topic:
       integration-event: family-account-manager.integration-event
+    outbox:
+      relay-interval-ms: 10000
