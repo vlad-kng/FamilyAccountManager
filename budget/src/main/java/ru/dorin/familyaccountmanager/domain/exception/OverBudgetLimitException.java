@@ -3,7 +3,7 @@ package ru.dorin.familyaccountmanager.domain.exception;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetCategory;
 import ru.dorin.familyaccountmanager.domain.aggregate.BudgetId;
 
-public class OverBudgetLimitException extends LocalizedException {
+public class OverBudgetLimitException extends BudgetException {
     public static final String MESSAGE = "budget.over.limit";
     public OverBudgetLimitException() {
         super(MESSAGE);

@@ -1,4 +1,7 @@
 spring:
+  graphql:
+    schema:
+      locations: classpath*:graphql/
   application:
     name: FamilyAccountManager
   data:

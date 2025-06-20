@@ -1,7 +1,6 @@
-package ru.dorin.familyaccountmanager.application.adapter.query.mongo;
+package ru.dorin.familyaccountmanager.application.adapter.query;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.dorin.familyaccountmanager.domain.aggregate.Family;
 import ru.dorin.familyaccountmanager.domain.aggregate.FamilyId;
@@ -15,9 +14,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Primary
 @RequiredArgsConstructor
-public class MongoFamilyQueryService implements FamilyQueryService, BudgetIdQuery, FamilyIdQuery {
+public class FamilyQueryServiceImpl implements FamilyQueryService, BudgetIdQuery, FamilyIdQuery {
     private final EventStore<Family, FamilyEvent> eventStore;
 
     public Family getFamily(FamilyId familyId) {

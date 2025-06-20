@@ -15,8 +15,11 @@ type Account {
     name: String
     accountType: AccountType
     balance: String
-    family: Family
     transactions: [Transaction]
+}
+
+extend type Family {
+    accounts: [Account]
 }
 
 enum AccountType {

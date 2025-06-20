@@ -4,7 +4,6 @@ extend type Mutation {
 
 type Budget {
     id: ID
-    family: Family
     category: BudgetCategory
     period: YearMonthScalar
     limits: Float
@@ -17,6 +16,10 @@ enum BudgetCategory {
     ENTERTAINMENT,
     UTILITIES,
     OTHER
+}
+
+extend type Family {
+    budgets: [Budget]
 }
 
 scalar YearMonthScalar

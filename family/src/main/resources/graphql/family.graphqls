@@ -11,14 +11,19 @@ type Family {
     id: ID
     surname: String
     members: [Member]
-    accounts: [Account]
-    budgets: [Budget]
 }
 
 type Member {
     id: ID
     name: String
     role: Role
+}
+
+extend type Account {
+    family: Family
+}
+extend type Budget {
+    family: Family
 }
 
 enum Role {
