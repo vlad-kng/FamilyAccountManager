@@ -55,12 +55,6 @@ public class Account extends AbstractDomainAggregate<Account> {
         return new Account(id, name, accountType, familyId, initialBalance);
     }
 
-//    public List<AccountEvent> pullDomainEvent() {
-//        var copy = List.copyOf(domainEvents);
-//        domainEvents.clear();
-//        return copy;
-//    }
-
     public void increaseBalance(Money money) {
         balance = balance.add(money);
     }

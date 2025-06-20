@@ -1,21 +1,21 @@
 package ru.dorin.familyaccountmanager.domain.aggregate;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.dorin.familyaccountmanager.domain.valueobject.DomainId;
 
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = false)
-@Data
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class AccountId extends DomainId<Account> {
-    private UUID id;
 
     public AccountId() {
-        this.id = UUID.randomUUID();
+        super();
     }
     public AccountId(String id) {
-        this.id = UUID.fromString(id);
+        super(id);
+    }
+
+    public AccountId(UUID id) {
+        super(id);
     }
 }

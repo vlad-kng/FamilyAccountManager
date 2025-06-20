@@ -62,7 +62,7 @@ class ArchUnitTests {
                 .and().areNotInterfaces()
                 .and().doNotHaveModifier(JavaModifier.ABSTRACT)
                 .should().beAnnotatedWith(ConditionalOnProperty.class);
-
+        rule.check(importedClasses);
     }
 
 }

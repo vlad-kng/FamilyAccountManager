@@ -7,5 +7,5 @@ import ru.dorin.familyaccountmanager.application.port.ErrorResponse;
 @Getter
 @Setter
 public class GenericRestPresenter<T> {
-    private RestResponse<T, ErrorResponse> response;
+    private HttpResponse<T, ErrorResponse> response;
 }

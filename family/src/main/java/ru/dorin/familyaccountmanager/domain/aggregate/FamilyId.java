@@ -1,21 +1,20 @@
 package ru.dorin.familyaccountmanager.domain.aggregate;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.dorin.familyaccountmanager.domain.valueobject.DomainId;
 
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = false)
-@Data
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class FamilyId extends DomainId<Family> {
-    private UUID id;
 
     public FamilyId() {
-        this.id = UUID.randomUUID();
+        super();
     }
     public FamilyId(String id) {
-        this.id = UUID.fromString(id);
+        super(id);
+    }
+    public FamilyId(UUID id) {
+        super(id);
     }
 }

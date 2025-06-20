@@ -1,41 +1,28 @@
 package ru.dorin.familyaccountmanager.application.port.graphql;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.graphql.GraphQlResponse;
 import org.springframework.graphql.ResponseError;
 import org.springframework.graphql.ResponseField;
+import ru.dorin.familyaccountmanager.application.port.rest.HttpResponse;
 
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
-public class GraphQLResponse<OK, ERR> implements GraphQlResponse {
-    private final OK ok;
-    private final ERR error;
+public class GraphQlResponseAdapter<OK, ERR> implements GraphQlResponse {
+    private final HttpResponse<OK, ERR> httpResponse;
 
-    public GraphQLResponse(OK ok, ERR error) {
-        this.ok = ok;
-        this.error = error;
-    }
-
-    public static <OK, ERR> GraphQLResponse<OK, ERR> success(OK ok) {
-        return new GraphQLResponse<>(ok, null);
-    }
-
-    public static <OK, ERR> GraphQLResponse<OK, ERR> error(ERR err) {
-        return new GraphQLResponse<>(null, err);
+    public GraphQlResponseAdapter(HttpResponse<OK, ERR> httpResponse) {
+        this.httpResponse = httpResponse;
     }
 
     @Override
     public boolean isValid() {
-        return isOk();
+        return httpResponse.isOk();
     }
 
     @Override
     public <T> T getData() {
-        return isOk() ? (T) ok : (T) error;
+        return (T) httpResponse.body();
     }
 
     @Override
@@ -55,11 +42,6 @@ public class GraphQLResponse<OK, ERR> implements GraphQlResponse {
 
     @Override
     public Map<String, Object> toMap() {
-        return Map.of("ok", ok, "error", error);
+        return Map.of("ok", httpResponse.ok(), "error", httpResponse.err());
     }
-
-    public boolean isOk() {
-        return ok != null;
-    }
-
 }

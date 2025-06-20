@@ -2,6 +2,7 @@ package ru.dorin.familyaccountmanager.domain.aggregate;
 
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 import ru.dorin.familyaccountmanager.domain.exception.EmptyEventsException;
+import ru.dorin.familyaccountmanager.domain.valueobject.DomainId;
 
 import java.util.List;
 

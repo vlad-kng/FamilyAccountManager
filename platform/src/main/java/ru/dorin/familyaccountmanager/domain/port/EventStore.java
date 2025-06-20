@@ -1,7 +1,7 @@
 package ru.dorin.familyaccountmanager.domain.port;
 
 import ru.dorin.familyaccountmanager.domain.aggregate.AbstractDomainAggregate;
-import ru.dorin.familyaccountmanager.domain.aggregate.DomainId;
+import ru.dorin.familyaccountmanager.domain.valueobject.DomainId;
 import ru.dorin.familyaccountmanager.domain.event.DomainEvent;
 
 import java.util.Collection;
