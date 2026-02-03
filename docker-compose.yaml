@@ -37,7 +37,8 @@ services:
     ports:
       - "8082:8080"
     environment:
-      DYNAMIC_CONFIG_ENABLED: true
+      KAFKA_CLUSTERS_0_NAME: fam-cluster
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
     depends_on:
       - kafka
 
@@ -55,7 +56,50 @@ services:
       SPRING_DATA_MONGODB_URI: mongodb://fam-mongo:27017/event-store
       SPRING_PROFILES_ACTIVE: docker
       KAFKA_ENABLED: "true"
+      KAFKA_HOST: "kafka:29092"
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+
+  prometheus:
+    image: prom/prometheus
+    container_name: fam-prometheus
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: fam-grafana
+    volumes:
+      - ./infra/grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+  loki:
+    image: grafana/loki:3.0.0
+    container_name: fam-loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./infra/loki/loki.yml:/etc/loki/config.yml
+      - fam-loki-data:/loki
+    command: -config.file=/etc/loki/config.yml
+
+  promtail:
+    image: grafana/promtail:3.0.0
+    container_name: fam-promtail
+    volumes:
+      - ./infra/promtail/promtail.yml:/etc/promtail/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
 
 volumes:
   mongo_data:
+  fam-grafana-data:
+  fam-loki-data:

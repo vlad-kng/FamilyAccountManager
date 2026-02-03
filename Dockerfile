@@ -5,6 +5,6 @@ WORKDIR /home/gradle/project
 RUN gradle bootJar --no-daemon
 
 # Запуск приложения
-FROM openjdk:21-slim
+FROM eclipse-temurin:21-jre-jammy
 COPY --from=builder /home/gradle/project/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
